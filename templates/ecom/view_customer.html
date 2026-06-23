@@ -163,7 +163,8 @@
                         <!-- ຮູບພາບ -->
                         <td>
                             <!-- <img src="{% static c.profile_pic.url %}" alt="Profile" class="img-customer" loading="lazy"> -->
-                            <img src="/static/media/{{ c.profile_pic.name|cut:'profile_pic/' }}" alt="Profile" class="img-customer" loading="lazy">
+                           <!-- ແກ້ໄຂແຖວ 65 ໃຫ້ເປັນແບບນີ້ເລີຍ (ປ່ຽນເປັນ profile pic/CustomerProfilePic) -->
+                           <img src="/static/profile pic/CustomerProfilePic/{{ c.profile_pic.name|cut:'profile_pic/' }}" alt="Profile" class="img-customer" loading="lazy">
 
                         </td>
 
