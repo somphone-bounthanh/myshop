@@ -137,9 +137,9 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS=[STATIC_DIR,]
 
-MEDIA_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static') # ໃຫ້ຊີ້ມາທີ່ໂຟນເດີ static ຄືເກົ່າເພື່ອດຶງຮູບໄດ້
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL='/afterlogin'
 
