@@ -188,7 +188,7 @@
                    <button type="button" id="start-camera" class="btn btn-secondary btn-sm mt-1">📷 ເປີດກ້ອງຖ່າຍຮູບ</button>
                    <button type="button" id="click-photo" class="btn btn-warning btn-sm mt-1" style="display: none;">📸 ກົດຖ່າຍຮູບ</button>
                    <!-- ບ່ອນເກັບຮູບພາບທີ່ຖ່າຍແລ້ວ -->
-                   <canvas id="canvas" width="320" height="240" style="display: none; margin: 0 auto; border-radius: 10px;"></canvas>
+                   <canvas id="canvas" width="250" height="240" style="display: none; margin: 0 auto; border-radius: 10px;"></canvas>
 
                     <!-- <label style="font-size: 12px; color: #adb5bd; margin-left: 15px;">ຮູບໂປຣໄຟລ໌ (ຖ້າມີ)</label> -->
                     <!-- {% render_field customerForm.profile_pic class="form-control-style" style="padding-top: 10px;" %} -->
@@ -219,7 +219,6 @@ camera_button.addEventListener('click', async function() {
         alert("ກະລຸນາເຂົ້າເວັບໄຊຜ່ານ https:// ເພື່ອອະນຸຍາດໃຫ້ເປີດກ້ອງຖ່າຍຮູບໄດ້ຢ່າງປອດໄພ!");
         return;
     }
-
     try {
         let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
         video.srcObject = stream;
@@ -230,7 +229,6 @@ camera_button.addEventListener('click', async function() {
         alert("ບໍ່ສາມາດເປີດກ້ອງໄດ້: " + error.message + " (ກະລຸນາກວດເຊັກການອະນຸຍາດກ້ອງໃນ Browser)");
     }
 });
-
 click_button.addEventListener('click', function() {
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
     canvas.style.display = "block";
@@ -243,7 +241,6 @@ click_button.addEventListener('click', function() {
         container.items.add(file);
         fileInput.files = container.files;
     }, 'image/jpeg');
-    
     let stream = video.srcObject;
     let tracks = stream.getTracks();
     tracks.forEach(track => track.stop());
