@@ -201,7 +201,7 @@
             </td>
             <td>
               <div class="cart-img-wrapper">
-                <img src="{% static p.product_image.url %}" alt="{{ p.name }}">
+                <img src="/static/product_image/{{ p.product_image.name|cut:'product_image/' }}" alt="{{ p.name }}">   
               </div>
             </td>
             <td style="font-weight: 600;">{{ p.price|floatformat:0 }} ກີບ</td>
