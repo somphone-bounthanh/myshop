@@ -176,28 +176,42 @@
                     {% render_field customerForm.address class="form-control-style" placeholder="ທີ່ຢູ່ປະຈຸບັນ" %}
                 </div>
 
-                <div class="form-input-custom">
-                    {% render_field customerForm.mobile class="form-control-style" placeholder="ເບີໂທລະສັບ" %}
-                </div>
+              <div class="form-input-custom">
+    {% render_field customerForm.mobile class="form-control-style" placeholder="ເບີໂທລະສັບ" %}
+</div>
 
-               
-                <div class="text-center mt-2">
-                   <!--ແຖບສະແດງກ້ອງສົດ -->
-                  <video id="video" width="100%" height="auto" autoplay style="border: 2px solid #ccc; border-radius: 10px; display: none;"></video>
-                  <!-- ປຸ່ມກົດເປີດກ້ອງ ແລະ ກົດຖ່າຍ -->
-                   <button type="button" id="start-camera" class="btn btn-secondary btn-sm mt-1">📷 ເປີດກ້ອງຖ່າຍຮູບ</button>
-                   <button type="button" id="click-photo" class="btn btn-warning btn-sm mt-1" style="display: none;">📸 ກົດຖ່າຍຮູບ</button>
-                   <!-- ບ່ອນເກັບຮູບພາບທີ່ຖ່າຍແລ້ວ -->
-                   <canvas id="canvas" width="250" height="240" style="display: none; margin: 0 auto; border-radius: 10px;"></canvas>
+<div class="text-center mt-3">
+    <!-- ກອບສະແດງກ້ອງສົດ -->
+    <div style="max-width: 320px; margin: 0 auto;">
+        <video id="video" width="100%" height="auto" autoplay playsinline style="border: 2px solid #ccc; border-radius: 10px; display: none; object-fit: cover; background-color: #000;"></video>
+    </div>
+    
+    <!-- ກອບສະແດງຮູບພາບທີ່ຖ່າຍແລ້ວ -->
+    <div style="max-width: 320px; margin: 0 auto;">
+        <canvas id="canvas" style="display: none; margin: 0 auto; border: 2px solid #28a745; border-radius: 10px; max-width: 100%; height: auto;"></canvas>
+    </div>
 
-                    <!-- <label style="font-size: 12px; color: #adb5bd; margin-left: 15px;">ຮູບໂປຣໄຟລ໌ (ຖ້າມີ)</label> -->
-                    <!-- {% render_field customerForm.profile_pic class="form-control-style" style="padding-top: 10px;" %} -->
-                </div>
+    <!-- ປຸ່ມຄວບຄຸມການເຮັດວຽກ -->
+    <div class="mt-2">
+        <button type="button" id="start-camera" class="btn btn-secondary btn-sm">📷 ເປີດກ້ອງຖ່າຍຮູບ</button>
+        <button type="button" id="click-photo" class="btn btn-warning btn-sm" style="display: none;">📸 ກົດຖ່າຍຮູບ</button>
+        <button type="button" id="retake-photo" class="btn btn-danger btn-sm" style="display: none;">🔄 ຖ່າຍໃໝ່</button>
+    </div>
 
+    <!-- ຂໍ້ຄວາມແຈ້ງເຕືອນສະຖານະ ເມື່ອຖ່າຍຮູບສໍາເລັດ -->
+    <div id="upload-status" class="mt-2" style="font-size: 14px; color: #28a745; font-weight: bold; display: none;">
+        ✅ ບັນທຶກຮູບພາບຈາກກ້ອງຮຽບຮ້ອຍແລ້ວ!
+    </div>
+
+    <!-- 🔒 ຊ່ອງ Input ຂອງ Django ທີ່ຖືກຊ່ອນໄວ້ ( display: none; ) ບໍ່ໃຫ້ຜູ້ໃຊ້ເຫັນ ແລະ ບໍ່ໃຫ້ກົດເລືອກໄຟລ໌ -->
+    <div style="display: none;">
+        {% render_field customerForm.profile_pic class="form-control-style" %} 
+    </div>
+</div>
                 <button type="submit" class="btn-signup">ລົງທະບຽນ</button>
                 
                 <div class="footer-links">
-                    ຍັງບໍ່ມີບັນຊີບໍ? <a href="/customerlogin">ເຂົ້າສູ່ລະບົບທີ່ນີ້</a>
+                    ມີບັນຊີແລ້ວແມ່ນບໍ? <a href="/customerlogin">ເຂົ້າສູ່ລະບົບທີ່ນີ້</a>
                 </div>
             </form>
         </div>
@@ -206,45 +220,106 @@
     {% include "ecom/footer.html" %}
 
 </body>
+<!-- ========================================== -->
 <script>
+// ປະກາດຕົວແປອ້າງອີງຫາ Element ຕ່າງໆ
 let camera_button = document.querySelector("#start-camera");
 let video = document.querySelector("#video");
 let click_button = document.querySelector("#click-photo");
+let retake_button = document.querySelector("#retake-photo");
+let uploadStatus = document.querySelector("#upload-status");
 let canvas = document.querySelector("#canvas");
 let fileInput = document.querySelector('input[name="profile_pic"]');
+let localStream = null; // ເກັບ Object ຂອງກ້ອງເພື່ອເອົາໄວ້ປິດ
 
+// 1. ຟັງຊັນ: ກົດເປີດກ້ອງ
 camera_button.addEventListener('click', async function() {
-    // ກວດສອບວ່າເປັນ HTTPS ຫຼື ບໍ່
-    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    // ກວດສອບກ່ອນວ່າ Browser ຍອມໃຫ້ເຂົ້າເຖິງ mediaDevices ຫຼື ບໍ່
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("ຕົວທ່ອງເວັບຂອງທ່ານບລັອກການເຂົ້າເຖິງກ້ອງເນື່ອງຈາກຄວາມປອດໄພ (Insecure Origin)!\n\n" +
+              "ວິທີແກ້ໄຂ:\n" +
+              "1. ກະລຸນາປ່ຽນ URL ໃຫ້ເປັນ https://\n" +
+              "2. ຖ້າທົດສອບພາຍໃນ ໃຫ້ຕັ້ງຄ່າ Chrome Flags ເພື່ອອະນຸຍາດ IP ນີ້\n" +
+              "3. ຫຼື ໃຊ້ Ngrok ໃນການທົດສອບ");
+        return;
+    }
+
+    // ກວດສອບ IP ພາຍໃນ ຫຼື Localhost ເພື່ອຂ້າມຜ່ານແຈ້ງເຕືອນແອັບ
+    let isLocal = window.location.hostname === 'localhost' || 
+                  window.location.hostname === '127.0.0.1' || 
+                  window.location.hostname.startsWith('192.168.');
+
+    if (window.location.protocol !== 'https:' && !isLocal) {
         alert("ກະລຸນາເຂົ້າເວັບໄຊຜ່ານ https:// ເພື່ອອະນຸຍາດໃຫ້ເປີດກ້ອງຖ່າຍຮູບໄດ້ຢ່າງປອດໄພ!");
         return;
     }
+    
     try {
-        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
-        video.srcObject = stream;
+        // ຮ້ອງຂໍເປີດກ້ອງໜ້າ
+        localStream = await navigator.mediaDevices.getUserMedia({ 
+            video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }, 
+            audio: false 
+        });
+        
+        video.srcObject = localStream;
         video.style.display = "block";
         click_button.style.display = "inline-block";
         camera_button.style.display = "none";
+        canvas.style.display = "none";
+        retake_button.style.display = "none";
+        uploadStatus.style.display = "none"; // ຊ່ອນສະຖານະຕອນເປີດກ້ອງ
     } catch (error) {
-        alert("ບໍ່ສາມາດເປີດກ້ອງໄດ້: " + error.message + " (ກະລຸນາກວດເຊັກການອະນຸຍາດກ້ອງໃນ Browser)");
+        alert("ບໍ່ສາມາດເປີດກ້ອງໄດ້: " + error.message + "\n(ກະລຸນາກວດເຊັກວ່າທ່ານໄດ້ກົດ Allow ອະນຸຍາດກ້ອງໃນ Browser ແແລ້ວຫຼືບໍ່)");
     }
 });
+
+// 2. ຟັງຊັນ: ກົດຖ່າຍຮູບ
 click_button.addEventListener('click', function() {
+    // ປັບຂະໜາດ Canvas ໃຫ້ຄົມຊັດ ແລະ ສົມສ່ວນຕາມວິດີໂອຈິງ
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    
+    // ວາດພາບຈາກວິດີໂອລົງໄປໃນ Canvas
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // ປ່ຽນການສະແດງຜົນ UI
     canvas.style.display = "block";
     video.style.display = "none";
     click_button.style.display = "none";
+    retake_button.style.display = "inline-block";
     
+    // ແປງຮູບພາບໃນ Canvas ໃຫ້ກາຍເປັນໄຟລ໌ (Blob) ແລ້ວຍັດໃສ່ Input ທີ່ຊ່ອນໄວ້
     canvas.toBlob(function(blob) {
-        let file = new File([blob], "profile_live.jpg", {type:"image/jpeg", lastModified:new Date().getTime()});
+        let file = new File([blob], "profile_live.jpg", {type: "image/jpeg", lastModified: new Date().getTime()});
         let container = new DataTransfer();
         container.items.add(file);
-        fileInput.files = container.files;
-    }, 'image/jpeg');
-    let stream = video.srcObject;
-    let tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
+        fileInput.files = container.files; // ສົ່ງໄຟລ໌ຮູບພາບເຂົ້າໄປໃນ Django File Input
+        
+        // ສະແດງຂໍ້ຄວາມແຈ້ງເຕືອນວ່າໄດ້ຮັບຮູບແລ້ວ
+        uploadStatus.style.display = "block"; 
+    }, 'image/jpeg', 0.9);
+    
+    // ປິດການເຮັດວຽກຂອງກ້ອງ
+    stopCamera();
 });
+
+// 3. ຟັງຊັນ: ກົດຖ່າຍໃໝ່
+retake_button.addEventListener('click', function() {
+    // ເຄຍໄຟລ໌ຮູບພາບເກົ່າອອກຈາກ Input
+    fileInput.value = "";
+    uploadStatus.style.display = "none"; // ຊ່ອນຂໍ້ຄວາມສະຖານະ
+    
+    // ຈຳລອງການກົດປຸ່ມເປີດກ້ອງໃໝ່ອີກຄັ້ງ
+    camera_button.click();
+});
+
+// ຟັງຊັນເສີມ: ສໍາລັບສັ່ງປິດໄຟກ້ອງ
+function stopCamera() {
+    if (localStream) {
+        let tracks = localStream.getTracks();
+        tracks.forEach(track => track.stop());
+    }
+}
 </script>
 
 </html>
