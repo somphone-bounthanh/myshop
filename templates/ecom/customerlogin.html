@@ -1,168 +1,235 @@
 <!DOCTYPE html>
 {% load widget_tweaks %}
-<html lang="en" dir="ltr">
-  <head>
+<html lang="lo">
+<head>
     <meta charset="utf-8">
-    <title>sumit</title>
-    <style media="screen">
-      body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ເຂົ້າສູ່ລະບົບ - ຮ້ານນ້ຳປັ່ນ ມິວິນດາ</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    
+    <style>
+        /* ຈັດການ Layout ໃຫ້ Footer ຢູ່ລຸ່ມສຸດ */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
 
-.box {
-    width: 500px;
-    padding: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: #191919;
-    ;
-    text-align: center;
-    transition: 0.25s;
-    margin-top: 100px
-}
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Noto Sans Lao', sans-serif;
+            /* Gradient Background ຕາມຮູບ */
+            background: linear-gradient(135deg, #8e44ad 0%, #c33764 50%, #f27121 100%);
+            background-attachment: fixed;
+        }
 
-.box input[type="text"],
-.box input[type="password"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px 10px;
-    width: 250px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s
-}
+        .main-content {
+            flex: 1 0 auto; /* ດັນ Footer ລົງລຸ່ມ */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
 
-.box h1 {
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500
-}
+        /* Login Card ດີໄຊນ໌ມົນ ແລະ ສະອາດ */
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 50px 35px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
 
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
-    width: 300px;
-    border-color: #2ecc71
-}
+        /* ໄອຄອນ Profile ວົງມົນ */
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(to bottom, #a55eea, #4b7bec);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 40px;
+            box-shadow: 0 10px 20px rgba(75, 123, 236, 0.3);
+        }
 
-.box input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer
-}
+        h2 {
+            color: #2d3436;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
 
-.box input[type="submit"]:hover {
-    background: #2ecc71
-}
+        .subtitle {
+            color: #b2bec3;
+            font-size: 14px;
+            margin-bottom: 35px;
+        }
 
-.forgot {
-    text-decoration: underline
-}
+        /* ຊ່ອງກອກຂໍ້ມູນ (Input) */
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-ul.social-network {
-    list-style: none;
-    display: inline;
-    margin-left: 0 !important;
-    padding: 0
-}
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            background: #f1f3f5 !important;
+            border: 1px solid transparent;
+            border-radius: 15px;
+            outline: none;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Lao', sans-serif;
+            font-size: 15px;
+            transition: 0.3s;
+        }
 
-ul.social-network li {
-    display: inline;
-    margin: 0 5px
-}
+        input:focus {
+            background: #ffffff !important;
+            border-color: #ff4b2b;
+            box-shadow: 0 0 0 4px rgba(255, 75, 43, 0.1);
+        }
 
-.social-network a.icoFacebook:hover {
-    background-color: #3B5998
-}
+        /* ປຸ່ມກົດສີສົ້ມແດງ ທີ່ໂດດເດັ່ນ */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.3);
+            transition: 0.3s ease;
+        }
 
-.social-network a.icoTwitter:hover {
-    background-color: #33ccff
-}
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(255, 75, 43, 0.4);
+        }
 
-.social-network a.icoGoogle:hover {
-    background-color: #BD3518
-}
+        .signup-link {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #636e72;
+        }
 
-.social-network a.icoFacebook:hover i,
-.social-network a.icoTwitter:hover i,
-.social-network a.icoGoogle:hover i {
-    color: #fff
-}
+        .signup-link a {
+            color: #c33764;
+            text-decoration: none;
+            font-weight: 700;
+        }
 
-a.socialIcon:hover,
-.socialHoverClass {
-    color: #44BCDD
-}
+        /* Footer Style ທີ່ບໍ່ລ໊ອກ (ບໍ່ Fixed) */
+        footer {
+            flex-shrink: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.social-circle li a {
-    display: inline-block;
-    position: relative;
-    margin: 0 auto 0 auto;
-    border-radius: 50%;
-    text-align: center;
-    width: 50px;
-    height: 50px;
-    font-size: 20px
-}
+        .social-icons {
+            margin-bottom: 10px;
+        }
 
-.social-circle li i {
-    margin: 0;
-    line-height: 50px;
-    text-align: center
-}
+        .social-icons a {
+            color: white;
+            font-size: 18px;
+            margin: 0 12px;
+            text-decoration: none;
+            transition: 0.3s;
+            opacity: 0.8;
+        }
 
-.social-circle li a:hover i,
-.triggeredHover {
-    transform: rotate(360deg);
-    transition: all 0.2s
-}
+        .social-icons a:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
 
-.social-circle i {
-    color: #fff;
-    transition: all 0.8s;
-    transition: all 0.8s
-}
+        .copy-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            margin: 0;
+        }
     </style>
-  </head>
-  <body>
-    {% include "ecom/navbar.html" %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <form class="box" method="post">
-                  {% csrf_token %}
-                    <h1>Customer Login</h1>
-                    <p class="text-muted"> Please enter your login and password!</p>
-                               {% render_field form.username class="form-control" placeholder="Username" %}
-                               {% render_field form.password class="form-control" placeholder="Password" %}
-                     <input type="submit" name="" value="Login" >
+</head>
+<body>
 
-                </form>
+    {% include "ecom/navbar.html" %}
+    <div class="main-content">
+        <div class="login-card">
+            <div class="profile-icon">
+                <i class="fa-solid fa-circle-user">🥤</i>
+            </div>
+
+            <h2>ຮ້ານນ້ຳປັ່ນ ມິວິນດາ</h2>
+            <p class="subtitle">ເຂົ້າສູ່ລະບົບເພື່ອເລຶອກສັ່ງຊື້ສີນຄ້າຂອງທ່ານ</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {% render_field form.username class="form-control" placeholder="ຊື່ຜູ້ໃຊ້" %}
+                </div>
+
+                <div class="form-group">
+                    {% render_field form.password class="form-control" placeholder="ລະຫັດຜ່ານ" type="password" %}
+                </div>
+                   <!-- ແຈ້ງເຕືອນລວມ (Non-field errors) -->
+             
+<!-- Modal ຟອມ (ແຈ້ງເຕືອນເປັນພາສາລາວ) -->
+
+        
+        <form method="POST" id="authForm">
+            {% csrf_token %}
+            <!-- ສ່ວນສະແດງຂໍ້ຜິດພາດເປັນພາສາລາວ -->
+            {% if form.non_field_errors or form.errors %}
+                <div style="color: #d93025; background: #fdecea; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 15px; font-size: 14px; border: 1px solid #fabdbe;">
+                    <strong>⚠️ ແຈ້ງເຕືອນ:</strong><br>
+                    {% if form.non_field_errors %}
+                        {# ແປຂໍ້ຄວາມຜິດພາດທົ່ວໄປ #}
+                        {% if "Please enter a correct username and password" in form.non_field_errors.0 %}
+                            ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານ ບໍ່ຖືກຕ້ອງ!
+                        {% else %}
+                            {{ form.non_field_errors|striptags }}
+                        {% endif %}
+                    {% else %}
+                        ກະລຸນາກວດສອບຂໍ້ມູນໃຫ້ຖືກຕ້ອງ ແລະ ຄົບຖ້ວນ.
+                    {% endif %}
+                </div>
+            {% endif %}
+ 
+                <button type="submit" class="btn-login">ເຂົ້າສູ່ລະບົບ</button>
+            </form>
+
+            <div class="signup-section">
+                <p class="signup-link">ຍັງບໍ່ມີບັນຊີບໍ? <a href="/customersignup">ສະໝັກທີ່ນີ້</a></p>
             </div>
         </div>
     </div>
-</div>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-{% include "ecom/footer.html" %}
-  </body>
+
+    <!-- ໃສ່ Footer ໄວ້ບ່ອນນີ້ ຫຼື ໃຊ້ include ກໍໄດ້ -->
+    <!-- <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p class="copy-text">© 2026 ອອກແບບໂດຍ ຮ້ານນໍ້າປັ່ນ ມິວິນດາ. ສະຫງວນລິຂະສິດ.</p>
+    </footer> -->
+     {% include "ecom/footer.html" %}
+</body>
 </html>

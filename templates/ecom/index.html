@@ -1,5 +1,6 @@
 {% extends 'ecom/homebase.html' %}
 {% load static %}
+
 {% block content %}
 
   <style media="screen">
@@ -51,13 +52,13 @@ body {
   background-color: #fff;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1091px) {
   .el-wrapper {
     width: 345px;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 967px) {
   .el-wrapper {
     width: 290px;
     margin: 30px auto;
@@ -285,99 +286,489 @@ body {
 }
 
 /* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
-}
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+/* --- Navbar ເຕັມຈໍ --- */
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
+
+  :root {
+    --primary: #ff4757;
+    --secondary: #2f3542;
+    --bg-body: #f1f2f6;
+    --card-bg: #ffffff;
   }
+
+  body {
+  
+    font-family: 'Noto Sans Lao', sans-serif;
+    margin: 0;
+  }
+
+  /* ຈັດລຽງສິນຄ້າເປັນ Grid ທີ່ເປັນລະບຽບ (4 ຖັນໃນຄອມ, 2 ຖັນໃນມືຖື) */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Card Design ໃໝ່ */
+  .product-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  }
+
+  /* Image Section */
+  .img-box {
+    background: #f8f9fa;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  .img-box img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .product-card:hover .img-box img {
+    transform: scale(1.15) rotate(3deg);
+  }
+
+  /* Info Section */
+  .product-info {
+    padding: 15px;
+    text-align: center;
+  }
+
+  .product-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 5px;
+  }
+
+  .product-price {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 15px;
+  }
+
+  /* Quantity Selector (ບວກ/ລົບ) */
+  .qty-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f2f6;
+    border-radius: 30px;
+    margin: 0 40px 20px;
+    padding: 5px;
+    border: 1px solid #ddd;
+  }
+
+  .qty-btn {
+    border: none;
+    background: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: 0.2s;
+  }
+
+  .qty-btn:hover { background: var(--primary); color: white; }
+
+  .qty-input {
+    width: 45px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--secondary);
+  }
+
+  /* ປຸ່ມສັ່ງຊື້ */
+  .btn-add-cart {
+    background: linear-gradient(45deg, #ff4757, #ff6b81);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    text-decoration: none !important;
+  }
+
+  .btn-add-cart:hover { filter: brightness(1.1); color: white; }
+
+  @media (max-width: 600px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr); /* ມືຖືສະແດງ 2 ອັນຕໍ່ແຖວ */
+      gap: 10px;
+      padding: 10px;
+    }
+    .qty-selector { margin: 0 10px 15px; }
+    .product-name { font-size: 15px; }
+    .product-price { font-size: 18px; }
+  }
+
+/* --- ເພີ່ມພື້ນຫຼັງໃຫ້ Category Area --- */
+
+.category-nav-wrapper {
+    width: 100%;
+    overflow: hidden; /* ປ້ອງກັນຂອບຈໍເພ້ */
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.category-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* ຢູ່ເຄິ່ງກາງໃນຈໍຄອມ */
+    gap: 30px;
+    padding: 15px 20px;
+    
+    /* ເຕັກນິກເຮັດໃຫ້ເລື່ອນຊ້າຍ-ຂວາໃນມືຖື */
+    overflow-x: auto; 
+    white-space: nowrap; /* ບັງຄັບບໍ່ໃຫ້ຕົກແຖວເດັດຂາດ */
+    -webkit-overflow-scrolling: touch; /* ໃຫ້ເລື່ອນນຸ້ມນວນໃນ iOS */
+    scrollbar-width: none; /* ເຊື່ອງ scrollbar (Firefox) */
+}
+
+/* ເຊື່ອງ scrollbar (Chrome, Safari) */
+.category-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-link-item {
+    text-decoration: none !important;
+    color: #747d8c;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+    padding: 8px 0;
+    display: inline-flex; /* ປ່ຽນເປັນ inline-flex ເພື່ອໃຫ້ nowrap ເຮັດວຽກ */
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0; /* ຫ້າມບໍ່ໃຫ້ຕົວໜັງສືຖືກບີບ */
+}
+
+/* ເສັ້ນແລ່ນກ້ອງ */
+.nav-link-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #ff4757;
+    transition: 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 10px;
+}
+
+.nav-link-item.active {
+    color: #ff4757 !important;
+}
+
+.nav-link-item.active::after, .nav-link-item:hover::after {
+    width: 100%;
+}
+
+/* --- ປັບແຕ່ງພິເສດສຳລັບມືຖື --- */
+@media (max-width: 768px) {
+    .category-nav {
+        justify-content: flex-start; /* ໃນມືຖືໃຫ້ເລີ່ມຈາກຊ້າຍມື */
+        gap: 20px; /* ຫຼຸດໄລຍະຫ່າງເລັກນ້ອຍ */
+    }
+    
+    .nav-link-item {
+        font-size: 15px; /* ຕົວໜັງສືນ້ອຍລົງນິດໜຶ່ງ */
+    }
+}
+
+  /* --- ສ່ວນຄວບຄຸມການປ່ຽນໜ້າ (Pagination) --- */
+  /* --- ປັບແຕ່ງປຸ່ມປ່ຽນໜ້າ (Pagination) --- */
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0;
+    flex-wrap: wrap; /* ປ້ອງກັນການລົ້ນຂອບໃນມືຖື */
+  }
+
+  .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    color: #2f3542;
+    text-decoration: none !important;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  }
+
+  /* ລູກຫຼີ້ນເວລາ Hover */
+  .page-link:hover {
+    background: #ff4757;
+    color: white !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(255, 71, 87, 0.2);
+  }
+
+  /* ສະໄຕລ໌ສຳລັບໜ້າທີ່ກຳລັງເປີດຢູ່ (Active) */
+  .page-link.active {
+    background: #ff4757;
+    color: white !important;
+    border-color: #ff4757;
+    box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
+  }
+
+  /* ປຸ່ມ Previous / Next ແບບມີ Icon */
+  .page-arrow {
+    padding: 0 20px;
+    width: auto;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 600px) {
+    .page-link {
+      width: 38px;
+      height: 38px;
+      font-size: 14px;
+    }
+    .page-arrow span { display: none; } /* ເຊື່ອງຕົວໜັງສືໃນມືຖື ເຫຼືອແຕ່ Icon */
+  }
+   /* Animation ໃຫ້ໄອຄອນເຕັ້ນ */
+  @keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2) rotate(5deg); }
+  }
+
+  .modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px); /* ເອັບເຟັກແກ້ວມົວ */
+  }
+
+  .btn-go-home {
+    background: linear-gradient(135deg, #ff4757, #ff6b81);
+    color: white !important;
+    padding: 15px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+  }
+
+  .btn-go-home:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 71, 87, 0.4);
+  }
+  .add-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff4757; /* ສີແດງສົດ */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.add-btn:hover {
+    background-color: #ff6b81;
+    transform: scale(1.02); /* ໃຫ້ປຸ່ມໃຫຍ່ຂຶ້ນເລັກນ້ອຍເວລາຊີ້ */
 }
   </style>
 
-{%if products%}
-<h3 style="text-align:center; color:yellow;">{{word}}</h3>
-<br>
-<!-- products data starttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt -->
-  <div class="row">
+{% if products %}
+<h2 style ="text-align:center; color: #2f3542; margin-top: 40px; font-weight: 800;">
+ <div class="category-nav-wrapper">
+    <div class="container">
+        <nav class="category-nav">
+            <!-- ✨ ທັງໝົດ -->
+            <a href="/" class="nav-link-item ">
+                <span>✨</span> ທັງໝົດ
+            </a>
 
-      {% for p in products %}
-      <!-- card1 -->
-      <div class="column">
-      <div class="container page-wrapper" style="width: 450px;">
-        <div class="page-inner">
-          <div class="row">
-            <div class="el-wrapper">
-              <div class="box-up">
-                <img class="img" src="{% static p.product_image.url %}" alt="product pic" height="300px" width="300px">
-                <div class="img-info">
-                  <div class="info-inner">
-                    <span style="background-color:#08050a; color:yellow;"class="p-company">{{p.name}}</span>
+            <!-- 🍓 ຜົນໄມ້ປັ່ນ -->
+            <a href="/search?query=fruit" class="nav-link-item">
+                <span>🍓</span> ຜົນໄມ້ປັ່ນ
+            </a>
 
-                  </div>
-                  <div class="a-size">{{p.description}}</div>
-                </div>
-              </div>
+            <!-- 🥛 ນົມ & ໂກໂກ້ -->
+            <a href="/search?query=milk" class="nav-link-item">
+                <span>🥛</span> ນົມ & ໂກໂກ້
+            </a>
 
-              <div class="box-down">
-                <div class="h-bg">
-                  <div class="h-bg-inner"></div>
-                </div>
+            <!-- 🍃 ຊາ & ກາເຟ -->
+            <a href="/search?query=tea" class="nav-link-item">
+                <span>🍃</span> ຊາ & ກາເຟ
+            </a>
 
-                <a class="cart" href="{% url 'add-to-cart' p.id  %}">
-                  <span class="price">₹ {{p.price}}</span>
-                  <span class="add-to-cart">
-                    <span class="txt">Add in cart</span>
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-<!-- card1 end -->
-{% if forloop.counter|divisibleby:"3" %}
+            <!-- 🥤 ອິຕາລີຽນໂຊດາ -->
+            <a href="/search?query=soda" class="nav-link-item">
+                <span>🥤</span> ໂຊດາ
+            </a>
+            
+            <!-- ເພີ່ມປະເພດອື່ນໆໄດ້ເລີຍ ມັນຈະບໍ່ຕົກແຖວ -->
+        </nav>
     </div>
-
-    <div class="row">
-
-          <br><br><br><br><br>
-{% endif %}
-  {% endfor %}
 </div>
-<!-- products data enddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
-{%else%}
-<h3 style="text-align:center; color:yellow;">No Search Found</h3>
-{%endif%}
+{{word}}
+</h2>
+
+<div class="products-grid">
+    {% for p in products %}
+    <div class="product-card">
+        <!-- ສ່ວນຮູບພາບ -->
+        <div class="img-box">
+            <img src="{% static p.product_image.url %}" alt="{{p.name}}">
+        </div>
+
+        <!-- ສ່ວນຂໍ້ມູນ -->
+        <div class="product-info">
+            <div class="product-name">{{p.name}}</div>
+            <div class="product-price">{{p.price}} ກີບ</div>
+        </div>
+
+       <div class="qty-selector">
+    <!-- ປຸ່ມລົບ: ສົ່ງ -1 -->
+    <button type="button" class="qty-btn" onclick="updateQty('{{p.id}}', -1)">-</button>
+    
+    <!-- ຊ່ອງຕົວເລກ: ມີ ID ທີ່ອ້າງອີງຕາມ ID ສິນຄ້າ -->
+    <input type="text" id="qty-{{p.id}}" class="qty-input" value="1" readonly>
+    
+    <!-- ປຸ່ມບວກ: ສົ່ງ 1 -->
+    <button type="button" class="qty-btn" onclick="updateQty('{{p.id}}', 1)">+</button>
+    </div>
+     
+    <button type="button" class="add-btn" onclick="addToCart('{{p.id}}')">
+        <span>🛒</span> ເພີ່ມລົງກະຕ່າ
+    </button>
+
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="modal fade" id="noResultModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="margin-top: 150px;">
+        <div class="modal-content" style="border-radius: 30px; border: none; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2);">
+            <div class="modal-body text-center" style="padding: 50px 30px;">
+                <div style="font-size: 80px; margin-bottom: 20px; animation: bounce 2s infinite;">🥤🔍</div>
+                <h3 style="font-weight: 800; color: #2f3542; margin-bottom: 15px;">ບໍ່ພົບເມນູທີ່ທ່ານຄົ້ນຫາ</h3>
+                <p style="color: #a4b0be; font-size: 16px; margin-bottom: 30px;">
+                    ຂໍອະໄພ! ພວກເຮົາຊອກຫາ "<strong>{{ request.GET.query }}</strong>" ບໍ່ເຫັນໃນລະບົບ <br>
+                    ລອງຄົ້ນຫາໃໝ່ ຫຼື ເລືອກເມນູອື່ນເບິ່ງເດີ້
+                </p>
+                <button type="button" class="btn-go-home" data-dismiss="modal" style="border: none; cursor: pointer; width: 100%;">
+                    ຕົກລົງ, ກັບໄປຄົ້ນຫາໃໝ່
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script ສັ່ງໃຫ້ Popup ເປີດທັນທີເມື່ອໂຫຼດໜ້ານີ້ -->
+<script>
+    $(document).ready(function(){
+        $("#noResultModal").modal('show');
+    });
+</script>
+{% endif %}
 
 <script>
-    {%if messages %}
-    {%for message in messages%}
-    alert('{{message}}');
-    {%endfor%}
-    {%endif%}
+    // ຟັງຊັນບວກ/ລົບເລກໃນໜ້າເວັບ (ປ່ຽນແຕ່ຕົວເລກໃຫ້ User ເຫັນ)
+    function updateQty(id, delta) {
+        let input = document.getElementById('qty-' + id);
+        let newVal = parseInt(input.value) + delta;
+        if (newVal >= 1 && newVal <= 20) {
+            input.value = newVal;
+        }
+    }
+
+    // ຟັງຊັນສົ່ງຂໍ້ມູນໄປຫາ Django (ເອົາ ID ແລະ ຈຳນວນໄປນຳ)
+    function addToCart(productId) {
+        // ດຶງຄ່າຈາກຊ່ອງ Input ທີ່ລູກຄ້າກົດບວກ/ລົບໄວ້
+        let qty = document.getElementById('qty-' + productId).value;
+        
+        // ສົ່ງໄປຫາ URL ພ້ອມແນບ Parameter ?quantity=...
+        // ຕົວຢ່າງ: /add-to-cart/5?quantity=3
+        window.location.href = "/add-to-cart/" + productId + "?quantity=" + qty;
+    }
 </script>
+
 <br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br>
+<!-- ວາງໄວ້ກ້ອງ </div> ຂອງ Grid ສິນຄ້າ -->
+<div class="pagination-container">
+    <!-- ປຸ່ມຍ້ອນກັບ -->
+    <a href="?page=1" class="page-link page-arrow">
+        <i class="glyphicon glyphicon-chevron-left"></i> <span>ກ່ອນໜ້າ</span>
+    </a>
 
+    <!-- ເລກໜ້າ -->
+    <a href="?page=1" class="page-link active">1</a>
+    <a href="?page=2" class="page-link">2</a>
+    <a href="?page=3" class="page-link">3</a>
+    <span style="color: #ccc; padding: 0 5px;">...</span>
+    <a href="?page=10" class="page-link">10</a>
 
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
-
+    <!-- ປຸ່ມຖັດໄປ -->
+    <a href="?page=2" class="page-link page-arrow">
+        <span>ຖັດໄປ</span> <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 {% endblock content %}

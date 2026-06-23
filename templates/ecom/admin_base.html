@@ -1,139 +1,267 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+{% load webpush_notifications %}
+<html lang="lo">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MILINDA ADMIN | PREMIUM DASHBOARD</title>
+  <!-- Fonts & Icons -->
+  <link href="https://googleapis.com" rel="stylesheet">
+  <link rel="stylesheet" href="https://cloudflare.com">
+  <link rel="stylesheet" href="https://bootstrapcdn.com">
+  <!-- 1. ນຳເຂົ້າ Font ພາສາລາວທີ່ງາມທີ່ສຸດ -->
+<link rel="preconnect" href="https://googleapis.com">
+<link rel="preconnect" href="https://gstatic.com" crossorigin>
+<link href="https://googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;700&family=Phetsarath&display=swap" rel="stylesheet">
+<!-- 2. Font Awesome ມາດຕະຖານ -->
+<link rel="stylesheet" href="https://cloudflare.com">
 
+  <style>
+    :root {
+      --primary-dark: #0f172a;
+      --accent-gold: #fbbf24;
+      --sidebar-width: 260px;
+      --sidebar-collapsed-width: 80px;
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --bg-light: #f1f5f9;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --warning: #f59e0b;
+    }
+    
 
-  <style type="text/css">
-    .bs-example {
-      margin: 0px;
+  body {
+  /* 1. ເພີ່ມ Font Fallback ທີ່ດີ */
+  font-family: 'Noto Sans Lao', 'Phetsarath OT', 'Lao Sangam MN', sans-serif;
+  background-color: var(--bg-light);
+  margin: 0;
+  overflow-x: hidden;
 
+  /* 2. ເພີ່ມຄວາມມື່ນໃຫ້ຕົວໜັງສື (ສຳຄັນຫຼາຍສຳລັບ Browser) */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* 3. ປັບໄລຍະຫ່າງແຖວໃຫ້ສະຫຼະບໍ່ຕິດກັນ */
+  line-height: 1.8; 
+  
+  /* 4. ຂະໜາດຕົວໜັງສືເລີ່ມຕົ້ນ (ພາສາລາວຄວນໃຫຍ່ກວ່າພາສາອັງກິດເລັກນ້ອຍ) */
+  font-size: 16px;
+  color: #333; /* ໃຊ້ສີເທົາເຂັ້ມ ເບິ່ງສະບາຍຕາກວ່າສີດຳສະນິດ */
+}
+
+    /* --- Sidebar ທີ່ມີສີສັນ --- */
+    #sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(180deg, #0359e2 0%, #0f172a 100%);
+      color: white;
+      position: fixed;
+      left: 0; top: 0;
+      transition: var(--transition);
+      z-index: 1050;
+      box-shadow: 5px 0 25px rgba(0,0,0,0.15);
     }
 
-    .navbar-brand {
-      font-size: 20px;
-      font-family: sans-serif;
+    #sidebar.collapsed { width: var(--sidebar-collapsed-width); }
 
+    .sidebar-header {
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-        /*---------------------------------------
-           Social section
-        -----------------------------------------*/
-        footer {
-          padding: 0px 0px 0px 0px;
-          background-color: black;
-          margin: 0px;
-        }
+    .logo-text { font-weight: 800; font-size: 22px; color: var(--accent-gold); white-space: nowrap; display: flex; align-items: center; gap: 10px; }
+    #sidebar.collapsed .logo-text span { display: none; }
 
+    /* --- Menu Icons & Colors --- */
+    .nav-list { list-style: none; padding: 20px 10px; margin: 0; }
+    .nav-item { margin-bottom: 10px; }
+    .nav-link-custom {
+      display: flex; align-items: center; padding: 14px 18px;
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      border-radius: 15px; transition: var(--transition);
+    }
 
-        #ftr {
+    .nav-link-custom i { min-width: 35px; font-size: 20px; transition: 0.3s; }
+    .ic-dash { color: #38bdf8; }   /* ຟ້າ */
+    .ic-user { color: #f472b6; }   /* ບົວ */
+    .ic-book { color: #fbbf24; }   /* ຄຳ */
+    .ic-prod { color: #4ade80; }   /* ຂຽວ */
+    .ic-feed { color: #a855f7; }   /* ມ່ວງ */
 
-          padding: 20px;
-        }
+    .nav-link-custom:hover, .nav-link-custom.active {
+      background: rgba(255,255,255,0.1);
+      color: white; transform: translateX(8px);
+      text-decoration: none;
+    }
+    .nav-link-custom.active { 
+      background: rgba(251, 191, 36, 0.15); 
+      color: var(--accent-gold); 
+      border-left: 4px solid var(--accent-gold);
+    }
 
-        .fa {
+    #sidebar.collapsed .nav-link-custom span { display: none; }
 
-          font-size: 23px;
-          width: 60px;
-          text-align: center;
-          text-decoration: none;
-          margin: 5px 2px;
-          border-radius: 50%;
-        }
+    /* --- Main Content --- */
+    #main-content { margin-left: var(--sidebar-width); transition: var(--transition); padding: 30px; }
+    #main-content.expanded { margin-left: var(--sidebar-collapsed-width); }
 
-        .fa:hover {
-          opacity: 0.5;
-          text-decoration: none;
-        }
+    /* --- Top Bar & User Pill --- */
+    .top-bar {
+      background: white; padding: 15px 30px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-radius: 20px; margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
 
-        .fa-facebook {
-          background: #3B5998;
-          color: white;
-          margin-top: 30px;
-        }
+    .user-pill {
+      background: #f8fafc; padding: 6px 16px; border-radius: 30px;
+      display: flex; align-items: center; gap: 12px; border: 1px solid #e2e8f0;
+    }
 
-        .fa-whatsapp {
-          background: #25d366;
-          color: white;
-        }
+    /* --- Web Push Bar (Premium Look) --- */
+    .push-bar {
+      background: linear-gradient(90deg, #1e293b 0%, #334155 100%);
+      color: white; padding: 20px 30px; border-radius: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px; border-left: 8px solid var(--accent-gold);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
 
-        .fa-twitter {
-          background: #55ACEE;
-          color: white;
-        }
+    /* --- Stat Cards --- */
+    .stat-card {
+      border-radius: 25px; border: none; transition: 0.3s; position: relative; overflow: hidden; color: white;
+    }
+    .stat-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .card-icon-bg { position: absolute; right: -10px; bottom: -10px; font-size: 80px; opacity: 0.2; transform: rotate(-15deg); }
 
-        .fa-instagram {
-          background: #125688;
-          color: white;
-        }
+    /* --- Action Buttons in Table --- */
+    .btn-circle {
+      width: 35px; height: 35px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: none; color: white; transition: 0.3s;
+    }
+    .btn-edit { background: var(--info); }
+    .btn-delete { background: var(--danger); }
+    .btn-circle:hover { transform: scale(1.15) rotate(10deg); color: white; }
 
-        p {
-          text-align: center;
+    /* --- Footer --- */
+    footer { margin-top: 50px; text-align: center; color: #64748b; font-size: 14px; padding-bottom: 20px; }
 
-        }
+    @media (max-width: 768px) {
+      #sidebar { left: -260px; }
+      #sidebar.active { left: 0; width: 260px; }
+      #sidebar.active .logo-text span { display: block; }
+      #sidebar.active .nav-link-custom span { display: block; }
+      #main-content { margin-left: 0 !important; padding: 15px; }
+      .push-bar { flex-direction: column; text-align: center; gap: 15px; }
+    }
   </style>
+  
+  {% webpush_header %}
 </head>
 
 <body>
 
-
-
-  <div class="bs-example">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background:#337AB7;">
-      <a href="/" class="navbar-brand">Ecommerce</a>
-      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-        <div class="navbar-nav">
-          <a href="/view-customer" class="nav-item nav-link">Customer</a>
-          <a href="/admin-view-booking" class="nav-item nav-link">Booking</a>
-          <a href="/admin-products" class="nav-item nav-link">Products</a>
-          <a href="/view-feedback" class="nav-item nav-link">Feedback</a>
-        </div>
-
-        <div class="navbar-nav navbar-right">
-          <a href="/logout" class="nav-item nav-link">LOGOUT</a>
-        </div>
-
-      </div>
-    </nav>
-  </div>
-
-  <!-- content start-->
-  {% block content %}
-
-  {% endblock content %}
-  <!-- content end-->
-<br><br><br><br><br><br><br><br>
-  <footer>
-    <p>
-      <a id="ftr" href="https://facebook.com/sumit.luv/" class="fa fa-facebook"></a>
-      <a id="ftr" href="https://api.whatsapp.com/send?phone=919572181024&text=Hello%20Sumit.%0d%0aHow%20are%20you%20%3f%0d%0aI%20came%20from%20your%20website.&source=&data=#" class="fa fa-whatsapp"></a>
-      <a id="ftr" href="https://instagram.com/sumit.luv" class="fa fa-instagram"></a>
-      <a id="ftr" href="https://twitter.com/sumitkumar1503" class="fa fa-twitter"></a>
-    </p>
-
-    <br>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-sm-12">
-          <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
-            <p>Made in India <br>
-              Copyright &copy; 2020 LazyCoder </p>
-          </div>
-        </div>
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-text">
+        <i class="fa-solid fa-gem fa-bounce"></i> <span>MILINDA ADMIN</span>
       </div>
     </div>
-  </footer>
-  <!--
-  developed By : sumit kumar
-  facebook : fb.com/sumit.luv
-  youtube : youtube.com/lazycoders
-  -->
+    
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="/" class="nav-link-custom"><i class="fa-solid fa-chart-pie ic-dash"></i> <span>Dashboard</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="/view-customer" class="nav-link-custom"><i class="fa-solid fa-user-gear ic-user"></i> <span>ລູກຄ້າ</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin-view-booking" class="nav-link-custom active"><i class="fa-solid fa-receipt ic-book"></i> <span>ລາຍການຈອງ</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="/admin-products" class="nav-link-custom"><i class="fa-solid fa-wine-glass ic-prod"></i> <span>ສິນຄ້າ</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="/view-feedback" class="nav-link-custom"><i class="fa-solid fa-heart-pulse ic-feed"></i> <span>ຄຳຕິຊົມ</span></a>
+      </li>
+    </ul>
+
+    <div style="position: absolute; bottom: 30px; width: 100%; padding: 0 15px;">
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-block shadow-sm" style="border-radius: 15px; padding: 12px; font-weight: bold;">
+                <i class="fa-solid fa-power-off mr-2"></i> <span>ອອກຈາກລະບົບ</span>
+            </button>
+        </form>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <button class="btn btn-light shadow-sm" style="border-radius: 12px; width: 45px; height: 45px;" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars-staggered text-primary"></i>
+      </button>
+      
+      <div class="user-pill shadow-sm">
+        <i class="fa-solid fa-circle-user text-primary" style="font-size: 24px;"></i>
+        <span class="font-weight-bold" style="color: var(--primary-dark);">{{ user.username }}</span>
+        <div class="bg-success rounded-circle" style="width: 10px; height: 10px;" title="Online"></div>
+      </div>
+    </header>
+
+   
+
+    <!-- Main Content Area -->
+    <div class="bg-white p-4 shadow-sm" style="border-radius: 25px; min-height: 60vh; border: 1px solid rgba(0,0,0,0.03);">
+      {% block content %}
+        <!-- ເນື້ອໃນ Dashboard ຈະມາສະແດງຢູ່ນີ້ -->
+      {% endblock content %}
+    </div>
+
+    <footer>
+        <p><i class="fa-solid fa-location-dot mr-2 text-danger"></i> ບ້ານ ໂນນທອງ, ເມືອງ ໄຊທານີ, ນະຄອນຫຼວງວຽງຈັນ</p>
+        <p class="mb-0"><i class="fa-solid fa-copyright mr-1"></i> 2026 MILINDA PREMIUM ADMIN | Made in Laos 🇱🇦</p>
+    </footer>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://jquery.com"></script>
+  <script src="https://jsdelivr.net"></script>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const content = document.getElementById('main-content');
+      if (window.innerWidth > 768) {
+        sidebar.classList.toggle('collapsed');
+        content.classList.toggle('expanded');
+      } else {
+        sidebar.classList.toggle('active');
+      }
+    }
+
+    function playNotificationSound() {
+        const audio = new Audio('{% static "audio/notification.mp3" %}');
+        audio.play().catch(e => console.log("Sound error: Interaction required"));
+    }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'PUSH_RECEIVED') {
+                playNotificationSound();
+            }
+        });
+    }
+  </script>
 </body>
 </html>

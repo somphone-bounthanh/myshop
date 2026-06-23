@@ -1,117 +1,297 @@
 {% extends 'ecom/homebase.html' %}
 {% load static %}
+
 {% block content %}
-
-
-<head>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style media="screen">
-  .button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #f4511e;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 28px;
-  padding: 20px;
-  width: 200px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
+  :root {
+    --primary-color: #ff4757;
+    --success-color: #2ed573;
+    --dark-text: #2f3542;
+    --light-bg: #f1f2f6;
+  }
 
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
+  body {
+    background-color: var(--light-bg);
+    font-family: 'Noto Sans Lao', sans-serif;
+    padding-top: 50px;
+  }
 
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
+  /* --- Container & Panel --- */
+  .panel-custom {
+    background: #fff;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
 
-.button:hover span {
-  padding-right: 25px;
-}
+  .panel-header-custom {
+    background: linear-gradient(135deg, var(--primary-color), #ff6b81);
+    padding: 25px;
+    color: white;
+    text-align: center;
+  }
 
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
+  .panel-header-custom h2 {
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-size: 24px;
+  }
 
-.button2 {
-  background-color: white;
-  color: black;
-  border: 2px solid #008CBA;
-}
+  /* --- Table Styling --- */
+  .table-custom {
+    width: 100%;
+    margin-bottom: 0;
+  }
 
-.button2:hover {
-  background-color: #008CBA;
-  color: white;
-}
+  .table-custom thead th {
+    background: #f8f9fa;
+    padding: 20px !important;
+    color: #a4b0be;
+    text-transform: uppercase;
+    font-size: 13px;
+    border-bottom: 1px solid #eee;
+  }
 
+  .table-custom tbody tr td {
+    padding: 25px 20px !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #f1f2f6;
+  }
+
+  /* --- ຮູບພາບສິນຄ້າ (ໃຫຍ່ຂຶ້ນ ແລະ ງາມຂຶ້ນ) --- */
+  .cart-img-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    background: #f9f9f9;
+  }
+
+  .cart-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .cart-img-wrapper:hover img {
+    transform: scale(1.15);
+  }
+
+  /* --- Quantity Badge --- */
+  .qty-badge {
+    background: #f1f2f6;
+    color: var(--primary-color);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 16px;
+    display: inline-block;
+  }
+
+  /* --- Action Buttons --- */
+  .btn-remove {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff2f2;
+    color: var(--primary-color);
+    transition: 0.3s;
+    border: none;
+  }
+
+  .btn-remove:hover {
+    background: var(--primary-color);
+    color: #fff;
+    transform: rotate(90deg);
+  }
+
+  /* --- Summary Box --- */
+  .summary-box {
+    background: #fff;
+    border-radius: 30px;
+    padding: 35px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .total-price {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--dark-text);
+  }
+
+  .total-price span {
+    color: var(--primary-color);
+  }
+
+  .btn-checkout {
+    background: linear-gradient(135deg, var(--success-color), #58ea8d);
+    color: white !important;
+    padding: 18px 45px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 800;
+    text-decoration: none !important;
+    box-shadow: 0 10px 25px rgba(46, 213, 115, 0.3);
+    transition: 0.3s;
+    border: none;
+  }
+
+  .btn-checkout:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(46, 213, 115, 0.4);
+    filter: brightness(1.1);
+  }
+
+  .warning-label {
+    color: #ff7675;
+    font-size: 13px;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .summary-box { flex-direction: column; text-align: center; }
+    .cart-img-wrapper { width: 70px; height: 80px; }
+  }
 </style>
-
 </head>
-<!--
-written By : sumit kumar
-facebook : fb.com/sumit.luv
--->
-<br><br><br><br>
-
+<br>
+<br>
+<br>
 <div class="container">
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h6 style="text-align:center;" class="panel-title">My Cart</h6>
+  <!-- Header Panel -->
+  <div class="panel-custom">
+    <div class="panel-header-custom">
+      <h2>🛒 ກະຕ່າສິນຄ້າຂອງທ່ານ ({{ cart_total_items }} ລາຍການ)</h2>
     </div>
-    <table class="table table-hover" id="dev-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Remove From Cart</th>
+    
+    <div class="table-responsive">
+      <table class="table table-custom">
+        <thead>
+          <tr>
+            <th class="text-center">ລາຍການສິນຄ້າ</th>
+            <th class="text-center">ຮູບພາບ</th>
+            <th class="text-center">ລາຄາ/ໜ່ວຍ</th>
+            <th class="text-center"></th>
+            <th class="text-center">ຈຳນວນ</th>
+            <th class="text-center">ລາຄາລວມ</th>
+            <th class="text-center">ຈັດການ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in products %}
+          <tr>
+            <td>
+              <div style="font-weight: 800; font-size: 18px; color: var(--dark-text);">{{ p.name }}</div>
+              <small style="color: #a4b0be;">ເມນູນ້ຳປັ່ນສູດພິເສດ</small>
+            </td>
+            <td>
+              <div class="cart-img-wrapper">
+                <img src="{% static p.product_image.url %}" alt="{{ p.name }}">
+              </div>
+            </td>
+            <td style="font-weight: 600;">{{ p.price|floatformat:0 }} ກີບ</td>
+            <td class="text-center">
+ <td class="text-center">
+  <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+    
+    <!-- ປຸ່ມລົບ (-) ປ່ຽນ URL ໃຫ້ຖືກ -->
+    <a href="{% url 'remove-qty' p.id %}" style="text-decoration: none;">
+      <button type="button" style="width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid #ff4757; background: white; color: #ff4757; cursor: pointer; font-weight: bold; font-size: 20px;">-</button>
+    </a>
 
-        </tr>
-      </thead>
-      {% for p in products %}
-  {% if p %}
+    <span style="min-width: 40px; font-size: 20px; font-weight: 800; color: #2f3542;">
+      {{ p.qty }}
+    </span>
 
-      <tr>
-        <td> {{p.name}}</td>
-        <td> <img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
-        <td>{{p.price}}</td>
-        <td>{{p.description}}</td>
-
-        <td><a class="btn btn-danger btn-xs" href="{% url 'remove-from-cart' p.id  %}"><span class="glyphicon glyphicon-trash"></span></a></td>
-
-      </tr>
-      {%else%}
-      <br><br><br>
-      <h1>no products</h1>
-      {% endif %}
-      {% endfor %}
-    </table>
+    <!-- ປຸ່ມບວກ (+) ສີແດງຕາມຮູບ -->
+    <a href="{% url 'add-qty' p.id %}" style="text-decoration: none;">
+      <button type="button" style="width: 35px; height: 35px; border-radius: 50%; border: none; background: #ff4757; color: white; cursor: pointer; font-weight: bold; font-size: 20px;">+</button>
+    </a>
+    
   </div>
+</td>
+  </div>
+</td>
+            <td style="font-weight: 800; color: var(--dark-text); font-size: 18px;">
+              {{ p.subtotal|floatformat:0 }} ກີບ
+            </td>
+
+<!-- ປຸ່ມລຶບອອກທັງໝົດ (Trash) -->
+<td class="text-center">
+    <!-- ໃຊ້ URL ທີ່ລິ້ງຫາ remove_from_cart_view -->
+    <a href="{% url 'remove_qty_more' p.id %}" 
+       onclick="return confirm('ແນ່ໃຈບໍ່ວ່າຈະລຶບລາຍການນີ້ທັງໝົດ?')" 
+       style="color: #ff4757; text-decoration: none; font-weight: bold; cursor: pointer;">
+       🗑️ ລຶບ
+    </a>
+</td>
+</td>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center" style="padding: 100px !important;">
+              <div style="font-size: 60px; margin-bottom: 20px;">🥤</div>
+              <h3 style="color: #a4b0be; font-weight: 800;">ຍັງບໍ່ມີສິນຄ້າໃນກະຕ່າຂອງທ່ານ</h3>
+              <br>
+              <a href="/" class="btn-checkout" style="background: var(--primary-color);">ໄປເລືອກຊື້ສິນຄ້າເລີຍ</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+   Check Session: {{ request.session.cart }}
+
+  <!-- Summary & Checkout Section -->
+  {% if products %}
+  <div class="summary-box">
+    <div class="warning-label">
+      <strong>ໝາຍເຫດສຳຄັນ:</strong><br>
+      ກະລຸນາກວດສອບລາຍການໃຫ້ຖືກຕ້ອງ. ເມື່ອຢືນຢັນການສັ່ງຊື້ແລ້ວ ຈະບໍ່ສາມາດຍົກເລີກໄດ້.
+    </div>
+    
+    <div class="text-right">
+      <div class="total-price">ຍອດລວມທັງໝົດ:  <span>{{ total|floatformat:0 }} ກີບ</span></div>
+      <p style="color: #a4b0be; margin-bottom: 20px;">(ລວມພາສີມູນຄ່າເພີ່ມແລ້ວ)</p>
+      <a href="/customer-address" class="btn-checkout">
+        ຢືນຢັນການສັ່ງຊື້ ➔
+      </a>
+    </div>
+  </div>
+  {% endif %}
 </div>
+<br>
+<br>
+<br>
+<!-- WhatsApp Widget -->
+<script 
+  type="text/javascript"
+  src="https://d3mkw6s8thqya7.cloudfront.net"
+  id="aisensy-wa-widget"
+  widget-id="aaax2k"
+>
+</script>
+
+
 <br><br><br>
-<div style="text-align: center;">
-  <button class="button button2">Total {{total}}</button>
-  <a href="/customer-address"><button class="button" ><span>Purchase </span></button></a>
-</div>
-
-
-<br><br><br><br><br>
 <!--
 developed By : sumit kumar
 facebook : fb.com/sumit.luv

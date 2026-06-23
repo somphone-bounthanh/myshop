@@ -88,7 +88,7 @@ select{
 	color:red;
 }
 </style>
-{%if product_in_cart%}
+{% if cart_total_items %}
 <form method="post">
   {% csrf_token %}
 <ul class="form-style-1">
@@ -117,5 +117,5 @@ select{
 <h1 style="text-align:center; color:red;"> First Add Product In Cart </h1>
 <br><br><br><br><br><br><br><br><br><br>
 {%endif%}
-
+<br><br><br><br><br><br><br><br>
 {% endblock content %}

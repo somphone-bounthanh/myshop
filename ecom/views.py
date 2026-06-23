@@ -6,7 +6,12 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
 from django.conf import settings
+from django.shortcuts import render, redirect
+from .models import Product 
+from django.shortcuts import get_object_or_404
+from webpush import send_group_notification
 
+from webpush import send_group_notification
 def home_view(request):
     products=models.Product.objects.all()
     if 'product_ids' in request.COOKIES:
@@ -18,6 +23,24 @@ def home_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart})
+
+
+
+
+def process_order(request):
+    if request.method == "POST":
+        # ... ບັນທຶກອໍເດີ ...
+
+        payload = {
+            "title": "🥤 ມີອໍເດີໃໝ່ເຂົ້າມາ!",
+            "body": f"ອໍເດີຈາກ: {request.user.username} ລາຄາ {total_price} ກີບ",
+            "url": "/admin-view-booking/" # Link ໄປໜ້າຈັດການ
+        }
+        
+        # ສົ່ງແຈ້ງເຕືອນ
+        send_group_notification(group_name="admins", payload=payload, ttl=1000)
+
+        return render(request, 'payment_success.html')
 
 
 #for showing login button for admin(by sumit)
@@ -64,28 +87,41 @@ def afterlogin_view(request):
 #---------------------------------------------------------------------------------
 @login_required(login_url='adminlogin')
 def admin_dashboard_view(request):
-    # for cards on dashboard
-    customercount=models.Customer.objects.all().count()
-    productcount=models.Product.objects.all().count()
-    ordercount=models.Orders.objects.all().count()
+    # ສໍາລັບ Cards ສະຖິຕິ
+    customercount = models.Customer.objects.all().count()
+    productcount = models.Product.objects.all().count()
+    ordercount = models.Orders.objects.all().count()
 
-    # for recent order tables
-    orders=models.Orders.objects.all()
-    ordered_products=[]
-    ordered_bys=[]
+    # ສໍາລັບກາບວົງມົນ (Status Chart) - ດຶງຂໍ້ມູນຈິງມາແຍກສະຖານະ
+    delivered_count = models.Orders.objects.filter(status='Delivered').count()
+    pending_count = models.Orders.objects.filter(status='Pending').count()
+    other_count = ordercount - (delivered_count + pending_count)
+
+    # ສໍາລັບກາບເສັ້ນ (Sales Chart) - ຕົວເລກສົມມຸດ 7 ວັນ (ສາມາດຂຽນ Query ເພີ່ມໄດ້)
+    sales_data = [10, 25, 15, 30, 45, 35, 55] 
+
+    # ສໍາລັບຕາຕະລາງ Recent Orders (ດຶງພຽງ 10 ລາຍການຫຼ້າສຸດເພື່ອໃຫ້ໂຫຼດໄວ)
+    orders = models.Orders.objects.all().order_by('-id')[:10]
+    ordered_products = []
+    ordered_bys = []
     for order in orders:
-        ordered_product=models.Product.objects.all().filter(id=order.product.id)
-        ordered_by=models.Customer.objects.all().filter(id = order.customer.id)
+        ordered_product = models.Product.objects.filter(id=order.product.id)
+        ordered_by = models.Customer.objects.filter(id=order.customer.id)
         ordered_products.append(ordered_product)
         ordered_bys.append(ordered_by)
 
-    mydict={
-    'customercount':customercount,
-    'productcount':productcount,
-    'ordercount':ordercount,
-    'data':zip(ordered_products,ordered_bys,orders),
+    mydict = {
+        'customercount': customercount,
+        'productcount': productcount,
+        'ordercount': ordercount,
+        'data': zip(ordered_products, ordered_bys, orders),
+        'delivered_count': delivered_count,
+        'pending_count': pending_count,
+        'other_count': other_count,
+        'sales_data': sales_data,
     }
-    return render(request,'ecom/admin_dashboard.html',context=mydict)
+    return render(request, 'ecom/admin_dashboard.html', context=mydict)
+
 
 
 # admin view customer table
@@ -203,6 +239,8 @@ def view_feedback_view(request):
 #---------------------------------------------------------------------------------
 #------------------------ PUBLIC CUSTOMER RELATED VIEWS START ---------------------
 #---------------------------------------------------------------------------------
+
+
 def search_view(request):
     # whatever user write in search box we get in query
     query = request.GET['query']
@@ -215,104 +253,240 @@ def search_view(request):
         product_count_in_cart=0
 
     # word variable will be shown in html when user click on search button
-    word="Searched Result :"
+    word="ຜົນການຄົ້ນຫາສີນຄ້າ :"
 
     if request.user.is_authenticated:
         return render(request,'ecom/customer_home.html',{'products':products,'word':word,'product_count_in_cart':product_count_in_cart})
     return render(request,'ecom/index.html',{'products':products,'word':word,'product_count_in_cart':product_count_in_cart})
 
 
-# any one can add product to cart, no need of signin
-def add_to_cart_view(request,pk):
-    products=models.Product.objects.all()
 
-    #for cart counter, fetching products ids added by customer from cookies
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        counter=product_ids.split('|')
-        product_count_in_cart=len(set(counter))
-    else:
-        product_count_in_cart=1
 
-    response = render(request, 'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart})
+# 💡 1. ຟັງຊັນເພີ່ມຈຳນວນ (+)
+def add_qty(request, pk):
+    cart = request.session.get('cart', {})
+    product_id = str(pk)
+    
+    if product_id in cart:
+        cart[product_id] += 1
+    
+    request.session['cart'] = cart
+    # 💡 ຕ້ອງມີບັນທັດນີ້ເພື່ອບັງຄັບໃຫ້ Save ລົງ Database/Session
+    request.session.modified = True 
+    
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
-    #adding product id to cookies
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        if product_ids=="":
-            product_ids=str(pk)
+# 💡 2. ຟັງຊັນລົບຈຳນວນ (-)
+def remove_qty(request, pk):
+    cart = request.session.get('cart', {})
+    product_id = str(pk)
+    
+    if product_id in cart:
+        if cart[product_id] > 1:
+            cart[product_id] -= 1  # ຫຼຸດລົງ 1
         else:
-            product_ids=product_ids+"|"+str(pk)
-        response.set_cookie('product_ids', product_ids)
+            del cart[product_id]  # ຖ້າເຫຼືອ 1 ແລ້ວກົດລົບ ໃຫ້ລຶບອອກເລີຍ
+            
+    request.session['cart'] = cart
+    request.session.modified = True
+    return redirect(request.META.get('HTTP_REFERER', 'cart'))
+
+
+# 💡 2. ຟັງຊັນລົບຈຳນວນ (-) ຈຳນວນຫຼາຍໆກວ່າ1ຂື້ນໄປ
+def remove_qty_more(request, pk):
+      # ດຶງຂໍ້ມູນ cart ຈາກ session
+    cart = request.session.get('cart', {})
+    product_id = str(pk)
+    
+    if product_id in cart:
+        # ລຶບ product_id ອອກຈາກ dictionary ທັນທີ
+        del cart[product_id]
+        
+        # ບັນທຶກການປ່ຽນແປງລົງໃນ session
+        request.session['cart'] = cart
+        request.session.modified = True
+        
+    return redirect(request.META.get('HTTP_REFERER', 'cart'))
+
+
+
+
+
+# --- ຟັງຊັນຊ່ວຍຈັດການ Cookie ---
+def get_response_with_cookie(request, product_id_list):
+    response = HttpResponseRedirect(request.META.get('HTTP_REFERER', '/cart/'))
+    if not product_id_list:
+        response.delete_cookie('product_ids', path='/')
     else:
-        response.set_cookie('product_ids', pk)
-
-    product=models.Product.objects.get(id=pk)
-    messages.info(request, product.name + ' added to cart successfully!')
-
+        new_value = "|".join(product_id_list)
+        response.set_cookie('product_ids', new_value, path='/', max_age=3600*24*7)
     return response
 
+# 1. ປຸ່ມບວກ (+) - ເພີ່ມຈຳນວນ
+def add_qty_view(request, pk):
+    product_ids = request.COOKIES.get('product_ids', "")
+    product_id_list = [i for i in product_ids.split('|') if i != ""]
+    product_id_list.append(str(pk))
+    return get_response_with_cookie(request, product_id_list)
 
+    
+
+# 2. ປຸ່ມລົບ (-) - ລົດຈຳນວນລົງ 1
+def remove_from_cart_view(request, pk):
+    # 1. ດຶງຂໍ້ມູນ Cookie
+    product_ids = request.COOKIES.get('product_ids', "")
+    str_pk = str(pk)
+    
+    if product_ids:
+        # 2. 💡 ໃຊ້ List Comprehension ເພື່ອ "ເອົາທຸກຕົວອອກ" ທີ່ເປັນ ID ນີ້
+        # (ຖ້າມີ ID '5' ຢູ່ 10 ໂຕ ມັນຈະຖືກລຶບອອກທັງ 10 ໂຕເລີຍ)
+        product_id_list = [i for i in product_ids.split('|') if i != str_pk and i != ""]
+        
+        # 3. ກຽມ Response (ກັບໄປໜ້າເດີມ)
+        response = HttpResponseRedirect(request.META.get('HTTP_REFERER', '/cart/'))
+        
+        # 4. 💡 ສິ່ງສຳຄັນ: ຕ້ອງໃສ່ path='/' ທັງຕອນຕັ້ງ ແລະ ຕອນລຶບ
+        if not product_id_list:
+            response.delete_cookie('product_ids', path='/')
+        else:
+            new_value = "|".join(product_id_list)
+            response.set_cookie('product_ids', new_value, path='/', max_age=3600*24*7)
+            
+        return response
+    return redirect('cart')
+
+
+
+# any one can add product to cart, no need of signin
+def add_to_cart_view(request, pk):
+    # 1. ດຶງຈຳນວນຈາກ URL (?quantity=5) ຖ້າບໍ່ມີໃຫ້ເປັນ 1
+    quantity = int(request.GET.get('quantity', 1))
+    
+    # 2. ດຶງຂໍ້ມູນກະຕ່າຈາກ Session (Dictionary)
+    cart = request.session.get('cart', {})
+
+    # 3. ບວກຈຳນວນໃໝ່ໃສ່ຈຳນວນເກົ່າ
+    product_id = str(pk)
+    if product_id in cart:
+        cart[product_id] += quantity
+    else:
+        cart[product_id] = quantity
+
+    # 4. ບັນທຶກ ແລະ ນັບຈຳນວນທັງໝົດ
+    request.session['cart'] = cart
+    request.session.modified = True
+    product_count_in_cart = sum(cart.values())
+
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
+    
+
+def update_cart_qty(request, p_id, delta):
+    cart = request.session.get('cart', {})
+    p_id_str = str(p_id)
+    
+    if p_id_str in cart:
+        cart[p_id_str] += int(delta)
+        if cart[p_id_str] < 1:
+            del cart[p_id_str]
+            
+    request.session['cart'] = cart
+    request.session.modified = True
+
+    # --- ຄິດໄລ່ລາຄາໃໝ່ທັງໝົດ ---
+    grand_total = 0
+    current_subtotal = 0
+    for id, qty in cart.items():
+        product = Product.objects.get(id=id)
+        sub = product.price * qty
+        grand_total += sub
+        if id == p_id_str:
+            current_subtotal = sub
+
+    return JsonResponse({
+        'status': 'success',
+        'product_qty': cart.get(p_id_str, 0),
+        'subtotal': "{:,}".format(current_subtotal),
+        'grand_total': "{:,}".format(grand_total),
+        'total_items': sum(cart.values())
+    })
 
 # for checkout of cart
+
 def cart_view(request):
-    #for cart counter
+    cart = request.session.get('cart', {})
+    products_list = [] # 💡 ສ້າງ List ໃໝ່ເພື່ອເກັບຂໍ້ມູນຈາກ Session
+    total = 0
+
+    for p_id, item_qty in cart.items():
+        try:
+            product = Product.objects.get(id=p_id)
+            subtotal = product.price * item_qty
+            total += subtotal
+            
+            # 💡 ປ້ອນຂໍ້ມູນໃສ່ List ໃໝ່ (ໃຊ້ qty ຈາກ Session)
+            products_list.append({
+                'id': product.id,
+                'name': product.name,
+                'price': product.price,
+                'qty': item_qty,      # <--- ເລກ 2 ຈະມາຈາກບ່ອນນີ້
+                'subtotal': subtotal,
+                'product_image': product.product_image
+            })
+        except Product.DoesNotExist:
+            continue
+
+    return render(request, 'ecom/cart.html', {
+        'products': products_list, # 💡 ສົ່ງ List ໃໝ່ນີ້ໄປໃຫ້ HTML
+        'total': total
+        
+    })
+
+
+
+def remove_from_cart_view(request, pk):
+    # 1. ກວດເບິ່ງ Cookies ວ່າສິນຄ້າມີຢູ່ບໍ່
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
-        counter=product_ids.split('|')
-        product_count_in_cart=len(set(counter))
-    else:
-        product_count_in_cart=0
-
-    # fetching product details from db whose id is present in cookie
-    products=None
-    total=0
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        if product_ids != "":
-            product_id_in_cart=product_ids.split('|')
-            products=models.Product.objects.all().filter(id__in = product_id_in_cart)
-
-            #for total price shown in cart
-            for p in products:
-                total=total+p.price
-    return render(request,'ecom/cart.html',{'products':products,'total':total,'product_count_in_cart':product_count_in_cart})
-
-
-def remove_from_cart_view(request,pk):
-    #for counter in cart
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        counter=product_ids.split('|')
-        product_count_in_cart=len(set(counter))
-    else:
-        product_count_in_cart=0
-
-    # removing product id from cookie
-    total=0
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        product_id_in_cart=product_ids.split('|')
-        product_id_in_cart=list(set(product_id_in_cart))
-        product_id_in_cart.remove(str(pk))
-        products=models.Product.objects.all().filter(id__in = product_id_in_cart)
-        #for total price shown in cart after removing product
+        product_id_list = product_ids.split('|')
+        
+        # 2. Logic ການລຶບ: ລຶບ ID ທີ່ກົງກັບ pk ອອກພຽງ 1 ຕົວ (ເພື່ອໃຫ້ເຫຼືອຕົວຊ້ຳໄວ້)
+        if str(pk) in product_id_list:
+            product_id_list.remove(str(pk))
+        
+        # 3. ສ້າງສາຍ String ໃໝ່ເພື່ອເກັບລົງ Cookies
+        value = "|".join(product_id_list)
+        
+        # 4. ຄິດໄລ່ສິນຄ້າທີ່ເຫຼືອເພື່ອສະແດງຜົນ
+        products = models.Product.objects.filter(id__in=product_id_list)
+        
+        # ຄິດໄລ່ລາຄາລວມ (Total) ຕາມຈຳນວນທີ່ເຫຼືອແທ້
+        total = 0
         for p in products:
-            total=total+p.price
-
-        #  for update coookie value after removing product id in cart
-        value=""
-        for i in range(len(product_id_in_cart)):
-            if i==0:
-                value=value+product_id_in_cart[0]
-            else:
-                value=value+"|"+product_id_in_cart[i]
-        response = render(request, 'ecom/cart.html',{'products':products,'total':total,'product_count_in_cart':product_count_in_cart})
-        if value=="":
+            # ນັບວ່າ ID ນີ້ເຫຼືອຈັກອັນໃນ list ແລ້ວຄູນລາຄາ
+            count = product_id_list.count(str(p.id))
+            total += (p.price * count)
+        
+        # ນັບຈຳນວນສິນຄ້າທັງໝົດໃນກະຕ່າ (Counter)
+        product_count_in_cart = len(product_id_list)
+        
+        # 5. ສ້າງ Response ແລະ ອັບເດດ Cookies ໃໝ່
+        response = render(request, 'ecom/cart.html', {
+            'products': products,
+            'total': total,
+            'product_count_in_cart': product_count_in_cart
+        })
+        
+        if value == "":
             response.delete_cookie('product_ids')
-        response.set_cookie('product_ids',value)
+        else:
+            response.set_cookie('product_ids', value)
+            
         return response
-
+    
+    return redirect('cart') # ຖ້າບໍ່ມີ Cookies ໃຫ້ກັບໄປໜ້າ Cart
+    
+    
 
 def send_feedback_view(request):
     feedbackForm=forms.FeedbackForm()
@@ -393,45 +567,36 @@ def customer_address_view(request):
 #then only this view should be accessed
 @login_required(login_url='customerlogin')
 def payment_success_view(request):
-    # Here we will place order | after successful payment
-    # we will fetch customer  mobile, address, Email
-    # we will fetch product id from cookies then respective details from db
-    # then we will create order objects and store in db
-    # after that we will delete cookies because after order placed...cart should be empty
-    customer=models.Customer.objects.get(user_id=request.user.id)
-    products=None
-    email=None
-    mobile=None
-    address=None
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        if product_ids != "":
-            product_id_in_cart=product_ids.split('|')
-            products=models.Product.objects.all().filter(id__in = product_id_in_cart)
-            # Here we get products list that will be ordered by one customer at a time
+    customer = models.Customer.objects.get(user_id=request.user.id)
+    cart = request.session.get('cart', {}) # ດຶງຂໍ້ມູນ {'product_id': quantity}
 
-    # these things can be change so accessing at the time of order...
-    if 'email' in request.COOKIES:
-        email=request.COOKIES['email']
-    if 'mobile' in request.COOKIES:
-        mobile=request.COOKIES['mobile']
-    if 'address' in request.COOKIES:
-        address=request.COOKIES['address']
+    if cart:
+        product_ids = cart.keys()
+        products = models.Product.objects.filter(id__in=product_ids)
 
-    # here we are placing number of orders as much there is a products
-    # suppose if we have 5 items in cart and we place order....so 5 rows will be created in orders table
-    # there will be lot of redundant data in orders table...but its become more complicated if we normalize it
-    for product in products:
-        models.Orders.objects.get_or_create(customer=customer,product=product,status='Pending',email=email,mobile=mobile,address=address)
+        for product in products:
+            # ດຶງຈຳນວນສິນຄ້າຈາກ Session ໂດຍໃຊ້ ID ຂອງ Product
+            qty = cart.get(str(product.id), 1)
+            
+            # ຄິດໄລ່ລາຄາລວມ (ລາຄາສິນຄ້າ x ຈຳນວນ)
+            total_amount = product.price * qty
 
-    # after order placed cookies should be deleted
-    response = render(request,'ecom/payment_success.html')
-    response.delete_cookie('product_ids')
-    response.delete_cookie('email')
-    response.delete_cookie('mobile')
-    response.delete_cookie('address')
-    return response
+            models.Orders.objects.create(
+                customer=customer,
+                product=product,
+                quantity=qty,        # ບັນທຶກຈຳນວນ
+                amount=total_amount, # ບັນທຶກຍອດເງິນ
+                status='Pending',
+                email=request.COOKIES.get('email', customer.user.email),
+                mobile=request.COOKIES.get('mobile', customer.mobile),
+                address=request.COOKIES.get('address', customer.address)
+            )
 
+        # ລຶບ Cart ຫຼັງຈາກບັນທຶກສຳເລັດ
+        request.session['cart'] = {}
+        request.session.modified = True
+        
+    return render(request, 'ecom/payment_success.html')
 
 
 
@@ -528,14 +693,33 @@ def edit_profile_view(request):
 def aboutus_view(request):
     return render(request,'ecom/aboutus.html')
 
+from django.shortcuts import render, redirect
+from . import forms
+import urllib.parse
+
+from django.shortcuts import render, redirect
+from . import forms, models
+
 def contactus_view(request):
     sub = forms.ContactusForm()
+    
     if request.method == 'POST':
         sub = forms.ContactusForm(request.POST)
+        
         if sub.is_valid():
-            email = sub.cleaned_data['Email']
-            name=sub.cleaned_data['Name']
-            message = sub.cleaned_data['Message']
-            send_mail(str(name)+' || '+str(email),message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER, fail_silently = False)
+            # --- 1. ບັນທຶກລົງ Database (ແກ້ Error 'save') ---
+            if hasattr(sub, 'save'):
+                # ໃຊ້ວິທີນີ້ຖ້າທ່ານປ່ຽນເປັນ ModelForm ແລ້ວ
+                sub.save()
+            else:
+                # ໃຊ້ວິທີນີ້ຖ້າທ່ານຍັງໃຊ້ forms.Form (ແບບເກົ່າ)
+                name = sub.cleaned_data.get('Name')
+                message = sub.cleaned_data.get('Message')
+                models.Feedback.objects.create(name=name, feedback=message)
+            
+            # --- 2. ປ່ຽນລິ້ງ: ສົ່ງລູກຄ້າໄປຫາໜ້າສຳເລັດ (Success Page) ---
+            # ໃຫ້ແນ່ໃຈວ່າທ່ານມີໄຟລ໌ ecom/contactussuccess.html ຢູ່ໃນ templates
             return render(request, 'ecom/contactussuccess.html')
-    return render(request, 'ecom/contactus.html', {'form':sub})
+            
+    return render(request, 'ecom/contactus.html', {'form': sub})
+

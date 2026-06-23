@@ -34,6 +34,11 @@ class Orders(models.Model):
     )
     customer=models.ForeignKey('Customer', on_delete=models.CASCADE,null=True)
     product=models.ForeignKey('Product',on_delete=models.CASCADE,null=True)
+    
+    # ເພີ່ມ 2 Field ນີ້
+    quantity = models.PositiveIntegerField(default=1) # ເກັບຈຳນວນ
+    amount = models.DecimalField(max_digits=15, decimal_places=2, null=True) # ເກັບຍອດເງິນທັງໝົດຂອງລາຍການນີ້
+
     email = models.CharField(max_length=50,null=True)
     address = models.CharField(max_length=500,null=True)
     mobile = models.CharField(max_length=20,null=True)
@@ -41,9 +46,11 @@ class Orders(models.Model):
     status=models.CharField(max_length=50,null=True,choices=STATUS)
 
 
+
 class Feedback(models.Model):
-    name=models.CharField(max_length=40)
-    feedback=models.CharField(max_length=500)
-    date= models.DateField(auto_now_add=True,null=True)
+    name = models.CharField(max_length=40)
+    feedback = models.TextField(max_length=500) # ປ່ຽນເປັນ TextField ເພື່ອໃຫ້ກອກໄດ້ຍາວ
+    date = models.DateField(auto_now_add=True, null=True)
+
     def __str__(self):
         return self.name

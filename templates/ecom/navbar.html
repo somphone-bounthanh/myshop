@@ -1,257 +1,402 @@
-<html>
+<!DOCTYPE html>
+<html lang="lo">
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff4757;
+            --secondary-color: #ffa502;
+            --dark-bg: #2f3542;
+        }
 
-<style>
+        body {
+            background-color: #f1f2f6;
+            font-family: 'Noto Sans Lao', sans-serif;
+            margin-top: 120px; /* ປ້ອງກັນເນື້ອຫາຖືກ Navbar ທັບ */
+        }
+
+        /* --- Navbar Style --- */
+    #navbar {
+    position: fixed;    /* ລ໊ອກຕຳແໜ່ງໄວ້ */
+    top: 0;             /* ໃຫ້ຕິດຂອບເທິງສຸດ */
+    left: 0;
+    width: 100%;        /* ໃຫ້ກວ້າງເຕັມຈໍ */
+    z-index: 1000;      /* ໃຫ້ຢູ່ເທິງສຸດຂອງທຸກ Object */
+    background: rgba(47, 53, 66, 0.95); /* ສີພື້ນແບບໃສເລັກນ້ອຍ */
+    backdrop-filter: blur(10px);        /* ເອັບເຟັກແກ້ວມົວ (Glassmorphism) */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3); /* ເພີ່ມເງົາໃຫ້ເບິ່ງມີມິຕິ */
+    padding: 20px 0;
+}
+
+/* ສຳຄັນ: ຕ້ອງເພີ່ມ Margin-top ໃຫ້ກັບ Body ເພື່ອບໍ່ໃຫ້ເນື້ອຫາຖືກ Navbar ທັບ */
 body {
-    background-color: #ebe0e0
+    padding-top: 110px; /* ປັບໄລຍະຫ່າງຕາມຄວາມສູງຂອງ Navbar ຂອງທ່ານ */
 }
 
-#navbar {
-    background-color: #000;
-    color: black;
+/* ຖ້າເປີດໃນມືຖື ໃຫ້ປັບໄລຍະຫ່າງໜ້ອຍລົງ */
+@media (max-width: 768px) {
+    body {
+        padding-top: 130px; 
+    }
 }
 
-.row1 {
-    padding-top: 10px;
-    padding-right: 50px
+        /* --- Logo Text --- */
+        .brand-logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff !important;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        .brand-logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+/* --- ປັບແຕ່ງຊ່ອງ Search ໃຫ້ເບິ່ງ Premium --- */
+.search-container {
+    display: flex;
+    background: #ffffff;
+    border-radius: 30px; /* ເຮັດໃຫ້ມົນແບບ Capsule */
+    padding: 3px;
+    border: 2px solid #eee; /* ຂອບບາງໆ */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-.row2 {
-    padding-bottom: 20px
+/* ເວລາຄລິກໃສ່ຊ່ອງ Search ໃຫ້ມີແສງ Glowing */
+.search-container:focus-within {
+    border-color: #ffa502;
+    box-shadow: 0 4px 15px rgba(255, 165, 2, 0.2);
 }
 
 .navbar-input {
-    padding: 11px 16px;
-    border-radius: 2px 0 0 2px;
-    border: 0 none;
-    outline: 0 none;
-    font-size: 15px
+    border: none !important;
+    background: transparent;
+    padding: 10px 20px;
+    width: 100%;
+    outline: none;
+    font-size: 15px;
+    color: #333;
 }
 
+/* --- ປຸ່ມຄົ້ນຫາ (Search Button) ໃໝ່ --- */
 .navbar-button {
-    background-color: #ffe11b;
-    border: 1px solid #ffe11b;
-    border-radius: 0 2px 2px 0;
-    color: #565656;
-    padding: 10px 0;
-    height: 43px;
-    cursor: pointer
+    background: linear-gradient(135deg, #ffa502 0%, #ff7f50 100%); /* ສີສົ້ມໄລ່ລະດັບ */
+    border: none;
+    padding: 10px 25px;
+    color: white;
+    font-weight: bold;
+    border-radius: 25px; /* ເຮັດໃຫ້ມົນເຂົ້າກັບ Container */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(255, 127, 80, 0.3);
 }
+
+/* ລູກຫຼິ້ນເວລາ Hover */
+.navbar-button:hover {
+    background: linear-gradient(135deg, #ff7f50 0%, #ffa502 100%); /* ປ່ຽນທິດທາງສີ */
+    transform: scale(1.03); /* ຂະຫຍາຍອອກເລັກນ້ອຍ */
+    box-shadow: 0 6px 15px rgba(255, 127, 80, 0.4);
+}
+
+/* ເວລາກົດປຸ່ມ */
+.navbar-button:active {
+    transform: scale(0.95);
+}
+
+/* Animation ໃຫ້ Icon ແວ່ນຂະຫຍາຍ */
+.navbar-button:hover .glyphicon-search {
+    transform: rotate(15deg) scale(1.2);
+    transition: 0.2s;
+}
+        .navbar-input {
+            border: none;
+            padding: 8px 20px;
+            width: 100%;
+            outline: none;
+            font-size: 14px;
+        }
+        .navbar-button {
+            background: var(--secondary-color);
+            border: none;
+            padding: 8px 20px;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .navbar-button:hover {
+            background: #e69500;
+        }
+
+        /* --- Navigation Links --- */
+        .upper-links .links {
+            color: #dfe4ea;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .upper-links .links:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--secondary-color);
+        }
+
+        /* --- Dropdown Custom --- */
+        .dropdown-menu {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .dropdown-menu li a {
+            padding: 10px 20px;
+            transition: background 0.2s;
+        }
+        .dropdown-menu li a:hover {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+        }
+        
+
+        /* --- Cart Button --- */
+        .cart-button {
+            background: var(--primary-color);
+            color: white !important;
+            padding: 8px 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+        }
+        .cart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 71, 87, 0.4);
+            filter: brightness(1.1);
+        }
+        .item-number {
+            background: white;
+            color: var(--primary-color);
+            padding: 1px 7px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .brand-logo { font-size: 20px; margin-bottom: 10px; }
+            .row2 { flex-direction: column; }
+            .cart-button { margin-top: 10px; width: 100%; justify-content: center; }
+        }
 
 .cart-button {
-    background-color: #808080;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .23), inset 1px 1px 0 0 hsla(0, 0%, 100%, .2);
-    padding: 10px 0;
-    text-align: center;
-    height: 41px;
-    border-radius: 2px;
-    font-weight: 500;
-    width: 120px;
-    display: inline-block;
-    color: #FFFFFF;
-    text-decoration: none;
-    color: inherit;
+    background: linear-gradient(45deg, #ff4757, #ff6b81); /* ສີແດງສະຫວ່າງແບບໄລ່ລະດັບ */
+    color: white !important;
+    padding: 10px 25px;
+    border-radius: 10px; /* ເຮັດໃຫ້ປຸ່ມມົນຄືກັບແຄັບຊູນ */
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animation ແບບເດັ້ງໆ */
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
     border: none;
-    outline: none
-}
-
-.cart-button:hover {
-    text-decoration: none;
-    color: #fff;
-    cursor: pointer
-}
-
-.cart-svg {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
-    margin-right: 8px
-}
-
-.item-number {
-    border-radius: 3px;
-    background-color: rgba(0, 0, 0, .1);
-    height: 20px;
-    padding: 3px 6px;
-    font-weight: 500;
-    display: inline-block;
-    color: #fff;
-    line-height: 12px;
-    margin-left: 10px
-}
-
-.upper-links {
-    display: inline-block;
-    padding: 0 11px;
-    line-height: 23px;
-    font-family: 'Roboto', sans-serif;
-    letter-spacing: 0;
-    color: inherit;
-    border: none;
-    outline: none;
-    font-size: 12px
-}
-
-.dropdown {
     position: relative;
-    display: inline-block;
-    margin-bottom: 0px
+    overflow: hidden;
 }
 
-.dropdown:hover {
-    background-color: #fff
+/* ລູກຫຼິ້ນເວລາ Hover (ເອົາເມົ້າຊີ້) */
+.cart-button:hover {
+    transform: translateY(-3px) scale(1.05); /* ປຸ່ມຟູຂຶ້ນ ແລະ ຂະຫຍາຍອອກ */
+    box-shadow: 0 8px 25px rgba(255, 71, 87, 0.5);
+    filter: brightness(1.1);
 }
 
-.dropdown:hover .links {
-    color: #000
+/* ລູກຫຼິ້ນເວລາ Click (ກົດປຸ່ມ) */
+.cart-button:active {
+    transform: translateY(0) scale(0.95);
 }
 
-.dropdown:hover .dropdown-menu {
-    display: block
+
+/* ຕົວເລກໃນກະຕ່າ (Badge) */
+.item-number {
+    background-color: white;
+    color: #ff4757;
+    padding: 2px 8px;
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    min-width: 24px;
+    text-align: center;
 }
 
-.dropdown .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    display: none;
-    background-color: #fff;
-    color: #333;
-    left: 0px;
-    border: 0;
-    border-radius: 0;
-    box-shadow: 0 4px 8px -3px #555454;
-    margin: 0;
-    padding: 0px
+/* ເພີ່ມ Animation ໃຫ້ Icon ກະຕ່າ */
+.cart-button:hover .glyphicon-shopping-cart {
+    animation: cartBounce 0.5s ease infinite alternate;
 }
 
-.links {
-    color: #fff;
-    text-decoration: none
+
+
+@keyframes cartBounce {
+    from { transform: rotate(-10deg); }
+    to { transform: rotate(10deg); }
 }
-
-.links:hover {
-    color: #fff;
-    text-decoration: none
-}
-
-.profile-links {
-    font-size: 12px;
-    font-family: 'Roboto', sans-serif;
-    border-bottom: 1px solid #e9e9e9;
-    box-sizing: border-box;
-    display: block;
-    padding: 0 11px;
-    line-height: 23px
-}
-
-.profile-li {
-    padding-top: 2px
-}
-
-.largenav {
-    display: none
-}
-
-.smallnav {
-    display: block
-}
-
-.smallsearch {
-    margin-left: 15px;
-    margin-top: 15px
-}
-
-.menu {
-    cursor: pointer
-}
-
-@media screen and (min-width: 768px) {
-    .largenav {
-        display: block
-    }
-
-    .smallnav {
-        display: none
-    }
-
-    .smallsearch {
-        margin: 0px
-    }
-}
-</style>
+    </style>
 </head>
 <body>
+
 <div id="navbar">
     <div class="container">
-        <div class="row row1">
-            <ul class="largenav pull-right">
-              <li class="upper-links dropdown"><a class="links" href="">Login & SignUp</a>
-                  <ul class="dropdown-menu">
-                      <li class="profile-li"><a class="profile-links" href="/customerlogin">Login</a></li>
-                      <li class="profile-li"><a class="profile-links" href="/customersignup">Signup</a></li>
-                  </ul>
-              </li>
+        <!-- Top Row: Navigation & Profile -->
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-md-12 text-right">
+                <ul class="list-inline" style="margin: 0; display: flex; justify-content: flex-end; align-items: center;">
+                    {% if user.is_authenticated %}
+                    <li class="upper-links dropdown">
+                        <a class="links dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-user"></span> ສະບາຍດີ, <strong>{{ user.username }}</strong> <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/my-orders"><span class="glyphicon glyphicon-list-alt"></span> ລາຍການສັ່ງຊື້</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                <form action="{% url 'logout' %}" method="post" id="logout-form" style="display: none;">{% csrf_token %}</form>
+                                <a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();" style="color: #ff4757;">
+                                    <span class="glyphicon glyphicon-log-out"></span> ອອກຈາກລະບົບ
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <!-- ເມນູ ເຂົ້າສູ່ລະບົບ / ສະໝັກ -->
+                     <br>
+                     <br>
+<li class="upper-links dropdown">
+    <a class="links dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="glyphicon glyphicon-user"></span>ເຂົ້າສູ່ລະບົບ <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="/customerlogin">
+                <span class="glyphicon glyphicon-log-in"></span> ເຂົ້າສູ່ລະບົບ
+            </a>
+        </li>
+        <li>
+            <a href="/customersignup">
+                <span class="glyphicon glyphicon-plus-sign"></span> ລົງທະບຽນ
+            </a>
+        </li>
+    </ul>
+</li>
+{% endif %}
 
-                <li class="upper-links"><a class="links" href="/adminclick">Admin</a></li>
-                <li class="upper-links dropdown"><a class="links" href="">More</a>
-                    <ul class="dropdown-menu">
-                      <li class="profile-li"><a class="profile-links" href="/send-feedback">Send Feedback</a></li>
-                        <li class="profile-li"><a class="profile-links" href="/contactus">Contact Us</a></li>
-                        <li class="profile-li"><a class="profile-links" href="/aboutus">About Us</a></li>
-                    </ul>
-                </li>
-            </ul>
+<!-- ເມນູ ຜູ້ດູແລ -->
+<li class="upper-links">
+    <a class="links" href="/adminclick">
+        <span class="glyphicon glyphicon-cog"></span> ຜູ້ດູແລ
+    </a>
+</li>
+
+<!-- ເມນູ ເພີ່ມເຕີມ -->
+<li class="upper-links dropdown">
+    <a class="links dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="glyphicon glyphicon-list"></span> ເພີ່ມເຕີມ <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="/contactus">
+                <span class="glyphicon glyphicon-envelope"></span> ຕິຊົມ
+            </a>
+        </li>
+        <li>
+            <a href="/aboutus">
+                <span class="glyphicon glyphicon-info-sign"></span> ກ່ຽວກັບເຮົາ
+            </a>
+        </li>
+    </ul>
+</li>
+                </ul>
+            </div>
         </div>
-        <div class="row row2">
-            <div class="col-sm-2">
-                <h2 style="margin:0px;"><a style="text-decoration:none; color:white;" href="/"><span class="largenav">Ecommerce </span></a></h2>
+
+        <!-- Main Row: Logo, Search, Cart -->
+        <div class="row row2" style="display: flex; align-items: center; flex-wrap: wrap;">
+            <div class="col-md-3 col-sm-4">
+                <a class="brand-logo" href="/">
+                    <span>🥤</span>ຮ້ານນ້ຳປັ່ນ ສົມພອນ
+                </a>
             </div>
 
-
-            <div class="navbar-search smallsearch col-sm-8 col-xs-11">
-              <form  action="/search" method="get">
-                <div class="row"> <input class="navbar-input col-xs-11" type="search" placeholder="Search for Products, Brands and more" name="query" id="query">
-                  <button class="navbar-button col-xs-1" type="submit">
-                    <svg width="15px" height="15px">
-                            <path d="M11.618 9.897l4.224 4.212c.092.09.1.23.02.312l-1.464 1.46c-.08.08-.222.072-.314-.02L9.868 11.66M6.486 10.9c-2.42 0-4.38-1.955-4.38-4.367 0-2.413 1.96-4.37 4.38-4.37s4.38 1.957 4.38 4.37c0 2.412-1.96 4.368-4.38 4.368m0-10.834C2.904.066 0 2.96 0 6.533 0 10.105 2.904 13 6.486 13s6.487-2.895 6.487-6.467c0-3.572-2.905-6.467-6.487-6.467 "></path>
-                    </svg>
-                  </button>
-                </div>
-              </form>
-            </div>
-
-
+           <div class="col-md-6 col-sm-5">
+    <form action="/search" method="get" class="search-container">
+        <input type="text" class="navbar-input" placeholder="ຄົ້ນຫາເມນູທີ່ທ່ານຕ້ອງການ..." name="query">
+        <button type="submit" class="navbar-button">
+            <span class="glyphicon glyphicon-search"></span>
+            <span>ຄົ້ນຫາ</span>
+        </button>
+    </form>
+    </div>
+            <div class="col-md-3 col-sm-3 text-right">
+                
+           
             <div class="cart1 largenav col-sm-2"> <a class="cart-button" href="/cart"> <svg class="cart-svg " width="16 " height="16 " viewBox="0 0 16 16 ">
                         <path d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86 " fill="#fff "></path>
-                    </svg> Cart <span class="item-number ">{{ product_count_in_cart }}</span> </a> </div>
+                    </svg> ກະຕ່າ <span class="item-number ">{{ cart_total_items }}</span> </a> </div>
+            </div>
+            </div>
         </div>
     </div>
 </div>
 
+</body>
+</html>
+
 <script>
-$(document).ready(function(){
 
-function openNav() {
-document.getElementById("mySidenav").style.width = "70%";
+function addToCart(productId) {
+    let qty = document.getElementById('qty-' + productId).value;
 
-document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    fetch(`/add-to-cart/${productId}/?quantity=${qty}`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest' // 💡 ຕ້ອງສົ່ງ Header ນີ້ໄປນຳ
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // 💡 ອັບເດດຕົວເລກໃນ Navbar (ຕ້ອງມີ id="cart-count")
+            const cartBadge = document.getElementById('cart-count');
+            if (cartBadge) {
+                cartBadge.innerText = data.total_items;
+                
+                // ເພີ່ມ Effect ໃຫ້ຕົວເລກເດັ້ງເລັກນ້ອຍ
+                cartBadge.style.transform = "scale(1.5)";
+                setTimeout(() => { cartBadge.style.transform = "scale(1)"; }, 200);
+            }
+            alert("ເພີ່ມສິນຄ້າສຳເລັດ!");
+        }
+    });
 }
 
-function closeNav() {
-document.getElementById("mySidenav").style.width = "0";
-document.body.style.backgroundColor = "rgba(0,0,0,0)";
-}
-
-
-});
 </script>
+
 
 </body>
 </html>

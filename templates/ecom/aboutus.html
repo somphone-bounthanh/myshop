@@ -5,31 +5,157 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>LazyCoder || sumit</title>
+  <title>LazyCoder || Shop</title>
 
-  <title>sumit</title>
+  <!-- ເພີ່ມ Google Fonts ແລະ Icon ງາມໆ -->
+  <link href="https://googleapis.com" rel="stylesheet">
+  <link rel="stylesheet" href="https://cloudflare.com">
+
   <style media="screen">
-    .footer{
-      position: fixed;
+    body {
+      background-color: #f0f8ff; /* ປ່ຽນເປັນສີຟ້າອ່ອນແບບສະອາດຕາ */
+      font-family: 'Noto Sans Lao', sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 60vh;
     }
+    /* ສ່ວນ Hero Section: ໃສ່ຮູບຮ້ານ ແລະ ຄຳຄົມ */
+    .hero-section {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static "images/shop_cover.jpg" %}'); /* ໃສ່ຮູບຮ້ານເປັນ Background */
+      background-size: cover;
+      background-position: center;
+      color: white;
+      margin-top: 56px; /* ໃຫ້ຫຼົບບ່ອນ Navbar */
+    }
+
+    .hero-section h3 {
+      font-size: 1.8rem;
+      max-width: 800px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+
+    /* ສ່ວນຂໍ້ມູນຮ້ານ ແລະ ທີ່ຕັ້ງ */
+    .info-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 40px 10% ;
+      gap: 20px;
+      flex: 1; /* ດັນ Footer ລົງລຸ່ມ */
+    }
+
+    .info-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .info-card i {
+      font-size: 2.5rem;
+      color: #039BE5;
+      margin-bottom: 15px;
+    }
+
+    .shop-img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .footer {
+      position: relative; /* ປ່ຽນຈາກ fixed ເປັນ relative ເພື່ອໃຫ້ຢູ່ລຸ່ມສຸດຂອງ Content */
+      width: 100%;
+    }
+    /* ປັບແຕ່ງກ່ອງຂໍ້ຄວາມເລື່ອນ */
+.scrolling-text-container {
+    background-color: #01579b; /* ສີຟ້າເຂັ້ມໃຫ້ຕັດກັບພື້ນຫຼັງ */
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 15px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 56px; /* ໃຫ້ຫຼົບບ່ອນ Navbar */
+}
+
+.scrolling-text {
+    display: inline-block;
+    animation: scroll 20s linear infinite; /* ປັບຄວາມໄວໄດ້ບ່ອນ 20s (ໜ້ອຍລົງ = ໄວຂຶ້ນ) */
+}
+
+.scrolling-text span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-right: 50px; /* ໄລຍະຫ່າງລະຫວ່າງຂໍ້ຄວາມ */
+}
+
+/* ຄຳສັ່ງເຮັດໃຫ້ມັນເລື່ອນ */
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* ຢຸດເລື່ອນເວລາເອົາ Mouse ໄປຈີ້ (Hover) */
+.scrolling-text-container:hover .scrolling-text {
+    animation-play-state: paused;
+}
+
   </style>
 </head>
 
-<body style="background-color: #B3E5FC;">
-  {%if request.user.is_authenticated%}
+<body>
+  {% if request.user.is_authenticated %}
     {% include "ecom/customer_navbar.html" %}
-  {%else%}
+  {% else %}
     {% include "ecom/navbar.html" %}
-  {%endif%}
-  <br><br><br>
-<h3 style="text-align:center;">“I don’t create companies for the sake of creating companies, but to get things done.” </h3>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  {% endif %}
+ຫກກກກກກກກກກກກກກກກກກກກກກກກກ
+  <!-- ສ່ວນຫົວຂໍ້ ແລະ ຮູບໜ້າຮ້ານ -->
+<div class="scrolling-text-container">
+    <div class="scrolling-text">
+        <span>“I don’t create companies for the sake of creating companies, but to get things done.” — Elon Musk — </span>
+        <!-- ເພີ່ມຂໍ້ຄວາມຊ້ຳອີກອັນໜຶ່ງເພື່ອໃຫ້ມັນເລື່ອນຕໍ່ກັນແບບບໍ່ມີບ່ອນຂາດ -->
+        <span>“I don’t create companies for the sake of creating companies, but to get things done.” — Elon Musk — </span>
+    </div>
+</div>
+  <main class="info-container">
+    <!-- Card 1: ຮູບພາບຮ້ານ -->
+    <div class="info-card">
+      <img src="{% static 'images/my_shop.jpg' %}" alt="ຮູບຮ້ານຂອງພວກເຮົາ" class="shop-img">
+      <h4 style="margin-top:15px;">ບັນຍາກາດຮ້ານ</h4>
+      <p>ຍິນດີຕ້ອນຮັບທຸກທ່ານ ເຂົ້າມາຊົມສິນຄ້າຕົວຈິງໄດ້ທີ່ຮ້ານ.</p>
+    </div>
+
+    <!-- Card 2: ທີ່ຕັ້ງສະຖານທີ່ -->
+    <div class="info-card">
+      <i class="fas fa-map-marker-alt"></i>
+      <h4>ທີ່ຕັ້ງຂອງຮ້ານ</h4>
+      <p>ບ້ານ ສີຫອມ, ເມືອງ ຈັນທະບູລີ,<br> ນະຄອນຫຼວງວຽງຈັນ, ສປປ ລາວ</p>
+      <p><strong><i class="fas fa-phone"></i> ໂທ:</strong> 020 5555 xxxx</p>
+      <p><strong><i class="fas fa-clock"></i> ເວລາເປີດ:</strong> 08:00 - 20:00</p>
+      <hr>
+        <script 
+      type="text/javascript"
+      src="https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"
+      id="aisensy-wa-widget"
+      widget-id="aaax2k">
+    </script>
+      VITA Vocational College , Lot 34-37 KM 22, Noonthong Village, Xaythany District, Vientiane Capital, Lao PDR.
+     </address> 
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d36086.82725829912!2d102.73202492806529!3d18.064124986973273!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31245fff95039e67%3A0xd19248b3e087252a!2sVITA%20Professional%20College!5e0!3m2!1sen!2sla!4v1769844573051!5m2!1sen!2sla" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></center>
+    </div>
+    </div>
+  </main>
+
   {% include "ecom/footer.html" %}
 </body>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
 
 </html>

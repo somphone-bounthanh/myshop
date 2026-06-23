@@ -1,91 +1,77 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com">
+  <link href="https://fonts.googleapis.com" rel="stylesheet">
 
   <style>
-    /*---------------------------------------
-   Social section
------------------------------------------*/
+    /* ປັບໃຫ້ Footer ຢູ່ທ້າຍໜ້າແບບປົກກະຕິ */
     footer {
-      padding: 0px 0px 0px 0px;
-      background-color: black;
-      margin: 0px;
-  
+      width: 100%;
+      background: rgba(0, 0, 0, 0.15); /* ໃຫ້ມີຄວາມໂປ່ງໃສໜ້ອຍໜຶ່ງເພື່ອຄວາມງາມ */
+      padding: 30px 0;
+      margin-top: 50px; /* ເພີ່ມໄລຍະຫ່າງຈາກເນື້ອຫາດ້ານເທິງ */
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .social-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px; /* ໄລຍະຫ່າງລະຫວ່າງ Icon */
+      margin-bottom: 15px;
     }
 
     .fa {
-      padding: 20px;
-      font-size: 23px;
-      width: 60px;
+      padding: 10px;
+      font-size: 18px;
+      width: 42px;
+      height: 42px;
       text-align: center;
       text-decoration: none;
-      margin: 5px 2px;
-      border-radius: 50%;
+      border-radius: 50%; /* ເຮັດໃຫ້ເປັນວົງມົນ */
+      color: white !important;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .fa:hover {
-      opacity: 0.5;
+      transform: translateY(-5px); /* ໃຫ້ Icon ເດັ້ງຂຶ້ນເວລາຊີ້ */
+      opacity: 0.8;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
       text-decoration: none;
     }
 
-    .fa-facebook {
-      background: #3B5998;
-      color: white;
-      margin-top: 30px;
-    }
+    /* ສີຕາມ Brand ໃຫ້ຄືກັບໃນຮູບ */
+    .fa-facebook { background: #3B5998; }
+    .fa-whatsapp { background: #25d366; }
+    .fa-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+    .fa-twitter { background: #1DA1F2; }
 
-    .fa-whatsapp {
-      background: #25d366;
-      color: white;
-    }
-
-    .fa-twitter {
-      background: #55ACEE;
-      color: white;
-    }
-
-    .fa-instagram {
-      background: #125688;
-      color: white;
-    }
-
-    p {
-      text-align: center;
-
+    .copyright {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 13px;
+      font-family: 'Noto Sans Lao', sans-serif;
+      margin: 0;
     }
   </style>
 </head>
 
-<footer>
+<body>
+  <!-- ເນື້ອຫາຂອງເວັບໄຊທ໌ຈະຢູ່ບ່ອນນີ້ -->
 
-  <p>
-    <a href="https://facebook.com/sumit.luv/" class="fa fa-facebook"></a>
-    <a href="https://api.whatsapp.com/send?phone=919572181024&text=Hello%20Sumit.%0d%0aHow%20are%20you%20%3f%0d%0aI%20came%20from%20your%20website.&source=&data=#" class="fa fa-whatsapp"></a>
-    <a href="https://instagram.com/sumit.luv" class="fa fa-instagram"></a>
-    <a href="https://twitter.com/sumitkumar1503" class="fa fa-twitter"></a>
-  </p>
-
-  <br>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 col-sm-12">
-        <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
-          <p>Made in India <br>
-            Copyright &copy; 2020 LazyCoder </p>
-        </div>
-      </div>
+  <footer>
+    <div class="social-container">
+      <a href="https://facebook.com" class="fa fa-facebook"></a>
+      <a href="https://api.whatsapp.com" class="fa fa-whatsapp"></a>
+      <a href="https://instagram.com" class="fa fa-instagram"></a>
+      <a href="https://twitter.com" class="fa fa-twitter"></a>
     </div>
-  </div>
-</footer>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
-
+    <p class="copyright">© 2026 ອອກແບບໂດຍ ຮ້ານນໍ້າປັ່ນ ມິວິນດາ. ສະຫງວນລິຂະສິດ.</p>
+  </footer>
+</body>
 </html>

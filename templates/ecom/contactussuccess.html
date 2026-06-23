@@ -1,45 +1,88 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en" dir="ltr">
-
+<html lang="lo">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ສົ່ງສຳເລັດ | MILINDA SHOP</title>
 
+    <!-- ໂຫຼດ Bootstrap ພື້ນຖານ -->
+    <link rel="stylesheet" href="https://bootstrapcdn.com">
+    <link href="https://googleapis.com" rel="stylesheet">
 
-  <title>LazyCoder || sumit</title>
-  <style media="screen">
-    .jumbotron {
-      margin-bottom: 0px;
-    }
+    <style>
+        /* ຈັດໃຫ້ Body ແລະ HTML ສູງເຕັມຈໍ */
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Noto Sans Lao', sans-serif;
+            background-color: #B3E5FC; /* ສີຟ້າອ່ອນຕາມແບບເກົ່າ */
+        }
 
-    .jumbotron h1 {
-      text-align: center;
-    }
-  </style>
+        /* ຕົວຈັດການໃຫ້ເນື້ອໃນຢູ່ເຄິ່ງກາງ */
+        .wrapper {
+            display: flex;
+            align-items: center;      /* ຢູ່ເຄິ່ງກາງແນວຕັ້ງ */
+            justify-content: center;   /* ຢູ່ເຄິ່ງກາງແນວນອນ */
+            height: 50vh;
+            padding: 20px;
+        }
 
+        .jumbotron {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 3rem;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 0; /* ລ້າງ margin ທີ່ບໍ່ຈຳເປັນ */
+        }
+
+        .btn-home {
+            background-color: #0288D1;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: white !important;
+            transition: 0.3s;
+        }
+
+        .btn-home:hover {
+            background-color: #01579B;
+            transform: translateY(-2px);
+        }
+
+        .success-icon {
+            color: #28a745;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
-<body style="background-color: #B3E5FC;">
-
+<body>
   {% include "ecom/navbar.html" %}
-  <br><br>
-  <div class="jumbotron">
-    <h1 class="display-4">Your message sent successfully !</h1>
-    <p class="lead">We will respond to your feedback soon</p>
-    <hr class="my-4">
-    <p>Check other features of website !</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="/" role="button">HOME</a>
-    </p>
-  </div>
+    <div class="wrapper">
+        <div class="jumbotron shadow-lg">
+            <!-- ໄອຄອນຖືກຕ້ອງແບບ Animation -->
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+            
+            <h1 class="display-5 font-weight-bold" style="color: #0288D1;">ສົ່ງຂໍ້ຄວາມສຳເລັດ!</h1>
+            <p class="lead text-muted">ພວກເຮົາໄດ້ຮັບຂໍ້ມູນຂອງທ່ານແລ້ວ ແລະ ຈະຕິດຕໍ່ກັບໂດຍໄວ.</p>
+            
+            <hr class="my-4">
+            
+            <p>ກັບໄປເລືອກເບິ່ງສິນຄ້າອື່ນໆໃນຮ້ານຂອງພວກເຮົາ</p>
+            <a class="btn btn-home shadow" href="/" role="button">ກັບຄືນໜ້າຫຼັກ</a>
+        </div>
+    </div>
+    
+    {% include "ecom/footer.html" %}
 
-  {% include "ecom/footer.html" %}
 </body>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
-
 </html>

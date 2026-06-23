@@ -1,180 +1,200 @@
 <!DOCTYPE html>
 {% load widget_tweaks %}
-<html lang="en" dir="ltr">
-  <head>
+<html lang="lo" dir="ltr">
+<head>
     <meta charset="utf-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ລົງທະບຽນລູກຄ້າ | Ecommerce</title>
+    
+    <!-- Google Font & Icons -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com">
 
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Lao', sans-serif;
+            /* ສີພື້ນຫຼັງ Gradient ຄືໃນຮູບ */
+            background: linear-gradient(135deg, #8e44ad 0%, #c33764 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+        }
 
+        .signup-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 550px;
+            padding: 50px 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
 
-    <style media="screen">
-      body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-}
+        /* ໂລໂກ້ວົງມົນດ້ານເທິງ */
+        .icon-header {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(to bottom, #a55eea, #4b7bec);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
 
-.box {
-    width: 500px;
-    padding: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background: #191919;
-    ;
-    text-align: center;
-    transition: 0.25s;
-    margin-top: 100px
-}
+        .signup-card h1 {
+            color: #2d3436;
+            font-weight: 700;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
 
-.box input[type="text"],
-.box input[type="password"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px 10px;
-    width: 250px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s
-}
+        .signup-card p {
+            color: #b2bec3;
+            margin-bottom: 35px;
+            font-size: 14px;
+        }
 
-.box h1 {
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500
-}
+        /* ປັບແຕ່ງຊ່ອງກອກຂໍ້ມູນ (Inputs) */
+        .form-input-custom {
+            margin-bottom: 18px;
+        }
 
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
-    width: 300px;
-    border-color: #2ecc71
-}
+        .form-control-style {
+            width: 100%;
+            height: 50px !important;
+            background: #f1f3f5 !important;
+            border: 1px solid transparent !important;
+            border-radius: 15px !important;
+            padding: 10px 20px !important;
+            font-size: 15px;
+            color: #2d3436 !important;
+            transition: all 0.3s;
+            box-shadow: none !important;
+            outline: none;
+        }
 
-.box input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer
-}
+        .form-control-style:focus {
+            background: #ffffff !important;
+            border-color: #ff4b2b !important;
+            box-shadow: 0 0 0 4px rgba(255, 75, 43, 0.1) !important;
+        }
 
-.box input[type="submit"]:hover {
-    background: #2ecc71
-}
+        /* ປຸ່ມກົດສີສົ້ມແດງ ທີ່ໂດດເດັ່ນຄືໃນຮູບ */
+        .btn-signup {
+            width: 100%;
+            height: 52px;
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 25px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.35);
+            transition: 0.3s ease;
+        }
 
-.forgot {
-    text-decoration: underline
-}
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 75, 43, 0.45);
+        }
 
-ul.social-network {
-    list-style: none;
-    display: inline;
-    margin-left: 0 !important;
-    padding: 0
-}
+        .footer-links {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #636e72;
+        }
 
-ul.social-network li {
-    display: inline;
-    margin: 0 5px
-}
+        .footer-links a {
+            color: #c33764;
+            text-decoration: none;
+            font-weight: 700;
+        }
 
-.social-network a.icoFacebook:hover {
-    background-color: #3B5998
-}
+        /* ຈັດວາງຊື່ ແລະ ນາມສະກຸນ ໃຫ້ງາມ */
+        .name-grid {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
 
-.social-network a.icoTwitter:hover {
-    background-color: #33ccff
-}
-
-.social-network a.icoGoogle:hover {
-    background-color: #BD3518
-}
-
-.social-network a.icoFacebook:hover i,
-.social-network a.icoTwitter:hover i,
-.social-network a.icoGoogle:hover i {
-    color: #fff
-}
-
-a.socialIcon:hover,
-.socialHoverClass {
-    color: #44BCDD
-}
-
-.social-circle li a {
-    display: inline-block;
-    position: relative;
-    margin: 0 auto 0 auto;
-    border-radius: 50%;
-    text-align: center;
-    width: 50px;
-    height: 50px;
-    font-size: 20px
-}
-
-.social-circle li i {
-    margin: 0;
-    line-height: 50px;
-    text-align: center
-}
-
-.social-circle li a:hover i,
-.triggeredHover {
-    transform: rotate(360deg);
-    transition: all 0.2s
-}
-
-.social-circle i {
-    color: #fff;
-    transition: all 0.8s;
-    transition: all 0.8s
-}
+        /* Placeholder ສີຈາງ */
+        ::placeholder {
+            color: #adb5bd;
+            opacity: 1;
+        }
     </style>
-  </head>
-  <body>
-    {% include "ecom/navbar.html" %}
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <form class="box" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                    <h1>CUSTOMER SIGNUP</h1>
-                    <p class="text-muted"> Please enter your details to create account !</p>
-                      {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
-                        {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
-                          {% render_field userForm.username class="form-control" placeholder="Username" %}
-                            {% render_field userForm.password class="form-control" placeholder="Password" %}
-                              {% render_field customerForm.address class="form-control" placeholder="Address" %}
-                                {% render_field customerForm.mobile class="form-control" placeholder="Mobile" %}
-                                  {% render_field customerForm.profile_pic class="form-control" placeholder="Profile pic" %}
-                  
-                     <input type="submit" name="" value="Create">
+</head>
+<body>
 
-                </form>
+    {% include "ecom/navbar.html" %}
+
+    <div class="main-content">
+        <div class="signup-card">
+            <!-- Icon Header ຄືໃນຮູບ -->
+            <div class="icon-header">
+                <i class="fas fa-store">🥤</i>
             </div>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <h1>ລົງທະບຽນລູກຄ້າ</h1>
+                <p>ກະລຸນາກອກຂໍ້ມູນເພື່ອສ້າງບັນຊີໃໝ່</p>
+
+                <div class="name-grid">
+                    {% render_field userForm.first_name class="form-control-style" placeholder="ຊື່" %}
+                    {% render_field userForm.last_name class="form-control-style" placeholder="ນາມສະກຸນ" %}
+                </div>
+
+                <div class="form-input-custom">
+                    {% render_field userForm.username class="form-control-style" placeholder="ຊື່ຜູ້ໃຊ້ (Username)" %}
+                </div>
+
+                <div class="form-input-custom">
+                    {% render_field userForm.password class="form-control-style" placeholder="ລະຫັດຜ່ານ" type="password" %}
+                </div>
+
+                <div class="form-input-custom">
+                    {% render_field customerForm.address class="form-control-style" placeholder="ທີ່ຢູ່ປະຈຸບັນ" %}
+                </div>
+
+                <div class="form-input-custom">
+                    {% render_field customerForm.mobile class="form-control-style" placeholder="ເບີໂທລະສັບ" %}
+                </div>
+
+                <div class="form-input-custom" style="text-align: left;">
+                    <label style="font-size: 12px; color: #adb5bd; margin-left: 15px;">ຮູບໂປຣໄຟລ໌ (ຖ້າມີ)</label>
+                    {% render_field customerForm.profile_pic class="form-control-style" style="padding-top: 10px;" %}
+                </div>
+
+                <button type="submit" class="btn-signup">ລົງທະບຽນ</button>
+                
+                <div class="footer-links">
+                    ຍັງບໍ່ມີບັນຊີບໍ? <a href="/customerlogin">ເຂົ້າສູ່ລະບົບທີ່ນີ້</a>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br>
-{% include "ecom/footer.html" %}
-  </body>
+
+    {% include "ecom/footer.html" %}
+
+</body>
 </html>

@@ -1,62 +1,164 @@
 {% extends 'ecom/admin_base.html' %}
 {% load static %}
 {% block content %}
-<br>
-{%include 'ecom/admin_dashboard_cards.html'%}
-<br><br><br><br><br>
 
-<hr><hr>
-<div class="container" >
+<!-- 1. ໂຫຼດ Chart.js ແບບ Defer (ໂຫຼດຫຼັງຈາກເນື້ອຫາຫຼັກຂຶ້ນແລ້ວ) -->
+<script src="https://jsdelivr.net" defer></script>
 
-    <div class="panel panel-primary" >
-      <div class="panel-heading" style="text-align:center;">
-        <h6 class="panel-title">Recent Booking</h6>
-      </div>
-      <table class="table table-hover" id="dev-table">
-        <thead>
-          <tr>
-            <th>Customer Name</th>
-            <th>Customer Mobile</th>
-            <th>Shipment Address</th>
-            <th>Product Name</th>
-            <th>Product Picture</th>
-            <th>Status</th>
+<style>
+    /* 2. ໃຊ້ System Fonts ທີ່ຮອງຮັບພາສາລາວເພື່ອຄວາມໄວສູງສຸດ */
+    :root {
+        --p-blue: #2563eb;
+        --s-green: #10b981;
+        --text-main: #1e293b;
+    }
 
-          </tr>
-        </thead>
-        {% for product,customer,order in data %}
-        <tr>
-          {% for c in customer %}
-          <td> {{c.get_name}}</td>
-          <td>{{c.mobile}}</td>
-          <td>{{order.address}}</td>
+    * {
+        font-family: 'Phetsarath OT', 'Noto Sans Lao', sans-serif;
+        box-sizing: border-box;
+    }
 
-          {% endfor %}
-          {% for p in product %}
-          <td> {{p.name}}</td>
-          <td> <img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+    body { background-color: #f1f5f9; margin: 0; -webkit-font-smoothing: antialiased; }
 
-          {% if order.status == 'Pending'%}
-          <td> <span class="label label-info">{{order.status}}</span></td>
-          {% elif order.status == 'Delivered' %}
-          <td> <span class="label label-success">{{order.status}}</span></td>
-          {% elif order.status == 'Out for Delivery' %}
-          <td> <span class="label label-warning">{{order.status}}</span></td>
-          {%else%}
-            <td> <span class="label label-primary">{{order.status}}</span></td>
-          {%endif%}
-          {% endfor %}
-        </tr>
-        {% endfor %}
+    /* Layout Container */
+    .dash-container { padding: 20px; max-width: 1600px; margin: auto; }
 
+    /* Minimalist Cards */
+    .card-flat {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+    }
 
+    .card-header-text {
+        font-weight: 700;
+        font-size: 15px;
+        color: var(--text-main);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 
+    /* Fast Table */
+    .table-fast { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .table-fast th { text-align: left; background: #f8fafc; padding: 12px; color: #64748b; border-bottom: 2px solid #edf2f7; }
+    .table-fast td { padding: 12px; border-bottom: 1px solid #edf2f7; vertical-align: middle; }
+    
+    .status-tag {
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .delivered { background: #dcfce7; color: #166534; }
+    .pending { background: #e0f2fe; color: #075985; }
 
+    .img-lite { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; background: #eee; }
 
-      </table>
+    .chart-box { height: 280px; position: relative; }
+</style>
 
-  </div>
+<div class="dash-container">
+    
+    <!-- ໂຫຼດ Card ຕົວເລກແບບເບົາບາງ -->
+    {% include 'ecom/admin_dashboard_cards.html' %}
+
+    <div class="row" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div style="flex: 2; min-width: 300px;">
+            <div class="card-flat">
+                <div class="card-header-text">📊 ແນວໂນ້ມການສັ່ງຊື້</div>
+                <div class="chart-box">
+                    <canvas id="fastLineChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div style="flex: 1; min-width: 250px;">
+            <div class="card-flat">
+                <div class="card-header-text">🥧 ສັດສ່ວນການສົ່ງ</div>
+                <div class="chart-box">
+                    <canvas id="fastPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ຕາຕະລາງທີ່ໂຫຼດໄວ (Minimal Markup) -->
+    <div class="card-flat" style="padding: 0; overflow: hidden;">
+        <div style="padding: 15px 20px; border-bottom: 1px solid #e2e8f0; font-weight: 700;">ລາຍການຈອງຫຼ້າສຸດ</div>
+        <div style="overflow-x: auto;">
+            <table class="table-fast">
+                <thead>
+                    <tr>
+                        <th>ຊື່ລູກຄ້າ</th>
+                        <th>ສິນຄ້າ</th>
+                        <th>ຮູບ</th>
+                        <th style="text-align: center;">ສະຖານະ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product, customer, order in data|slice:":5" %}
+                    <tr>
+                        {% for c in customer %}
+                        <td><strong>{{c.get_name}}</strong></td>
+                        {% endfor %}
+                        {% for p in product %}
+                        <td>{{p.name}}</td>
+                        <td><img src="{% static p.product_image.url %}" class="img-lite" loading="lazy"></td>
+                        <td align="center">
+                            <span class="status-tag {% if order.status == 'Delivered' %}delivered{% else %}pending{% endif %}">
+                                {{order.status}}
+                            </span>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
+<script>
+    // ລໍຖ້າໃຫ້ Chart.js ໂຫຼດສຳເລັດກ່ອນຈຶ່ງເລີ່ມສ້າງກາຟ
+    window.onload = function() {
+        if (typeof Chart !== 'undefined') {
+            createCharts();
+        }
+    };
+
+    function createCharts() {
+        // Line Chart
+        new Chart(document.getElementById('fastLineChart'), {
+            type: 'line',
+            data: {
+                labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+                datasets: [{
+                    data:,
+                    borderColor: '#2563eb',
+                    tension: 0.3,
+                    fill: false
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+
+        // Pie Chart
+        new Chart(document.getElementById('fastPieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['ສົ່ງແລ້ວ', 'ຄ້າງ'],
+                datasets: [{
+                    data:,
+                    backgroundColor: ['#10b981', '#2563eb']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, cutout: '70%' }
+        });
+    }
+</script>
 
 {% endblock content %}
