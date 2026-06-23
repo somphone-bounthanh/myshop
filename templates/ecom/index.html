@@ -669,7 +669,8 @@ body {
     <div class="product-card">
         <!-- ສ່ວນຮູບພາບ -->
         <div class="img-box">
-           <img src="{{ p.product_image.url }}" alt="{{p.name}}">
+           <img src="/static/product_image/{{ p.product_image.name|cut:'product_image/' }}" alt="{{ p.name }}">
+          
         </div>
 
         <!-- ສ່ວນຂໍ້ມູນ -->
