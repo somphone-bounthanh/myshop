@@ -9,6 +9,8 @@ from django.contrib.auth.views import LoginView,LogoutView
 from django.urls import path, include # ໃຫ້ແນ່ໃຈວ່າໄດ້ import include ແລ້ວ
 from django.conf import settings
 from django.conf.urls.static import static  # <--- ສໍາຄັນຫຼາຍ!! ຕ້ອງມີແຖວນີ້
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('',views.home_view,name=''),
     path('webpush/', include('webpush.urls')), 
@@ -63,4 +65,4 @@ urlpatterns = [
     path('payment-success', views.payment_success_view,name='payment-success'),
 
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()
