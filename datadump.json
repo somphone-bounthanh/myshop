@@ -1,0 +1,1380 @@
+[
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2020-10-22T08:57:04.506Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "Samsung Galaxy note 10",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2026-02-14T04:19:05.141Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "ຊາເຜຶອກເຢັນ",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Product image\", \"Price\", \"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2026-02-14T04:19:33.090Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "2",
+        "object_repr": "ຊາຂຽວເຢັນ",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2026-02-14T04:19:51.339Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "3",
+        "object_repr": "ຊາເຢັນໂກໂກ",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2026-02-14T04:20:14.786Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "ຊາໄທເຢັນ",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2026-02-14T04:20:53.156Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "5",
+        "object_repr": "KOKO",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2026-02-14T04:21:11.403Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "Sathai",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2026-02-14T04:21:29.829Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "3",
+        "object_repr": "KPAES",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2026-02-14T04:21:45.687Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "2",
+        "object_repr": "Sakheing",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2026-02-14T04:22:10.578Z",
+        "user": 3,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "Sah",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Description\"]}}]"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 1,
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 2,
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 3,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 4,
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 4,
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 4,
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view user",
+        "content_type": 4,
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 5,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 5,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 5,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 5,
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 6,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 6,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 6,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 6,
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add customer",
+        "content_type": 7,
+        "codename": "add_customer"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change customer",
+        "content_type": 7,
+        "codename": "change_customer"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete customer",
+        "content_type": 7,
+        "codename": "delete_customer"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view customer",
+        "content_type": 7,
+        "codename": "view_customer"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add product",
+        "content_type": 8,
+        "codename": "add_product"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change product",
+        "content_type": 8,
+        "codename": "change_product"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete product",
+        "content_type": 8,
+        "codename": "delete_product"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view product",
+        "content_type": 8,
+        "codename": "view_product"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add orders",
+        "content_type": 9,
+        "codename": "add_orders"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change orders",
+        "content_type": 9,
+        "codename": "change_orders"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete orders",
+        "content_type": 9,
+        "codename": "delete_orders"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view orders",
+        "content_type": 9,
+        "codename": "view_orders"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add feedback",
+        "content_type": 10,
+        "codename": "add_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change feedback",
+        "content_type": 10,
+        "codename": "change_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete feedback",
+        "content_type": 10,
+        "codename": "delete_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view feedback",
+        "content_type": 10,
+        "codename": "view_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 11,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 11,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 11,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 11,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+        "name": "Can add push information",
+        "content_type": 12,
+        "codename": "add_pushinformation"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+        "name": "Can change push information",
+        "content_type": 12,
+        "codename": "change_pushinformation"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+        "name": "Can delete push information",
+        "content_type": 12,
+        "codename": "delete_pushinformation"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+        "name": "Can view push information",
+        "content_type": 12,
+        "codename": "view_pushinformation"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+        "name": "Can add subscription info",
+        "content_type": 13,
+        "codename": "add_subscriptioninfo"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+        "name": "Can change subscription info",
+        "content_type": 13,
+        "codename": "change_subscriptioninfo"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+        "name": "Can delete subscription info",
+        "content_type": 13,
+        "codename": "delete_subscriptioninfo"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+        "name": "Can view subscription info",
+        "content_type": 13,
+        "codename": "view_subscriptioninfo"
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "CUSTOMER",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$XeKFOVixnO9s$CZ6kV72ArlLVjVQRKxUNtGlrrZPvUjyjiB9TLyUWMjg=",
+        "last_login": "2020-10-22T09:03:48.351Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2020-10-22T08:54:09.992Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$iFXnbHnE8fPc7yiJ6AkTBS$ONlnMvvbZcX1Y54YNIzbWSTw89U41Z6xkoI0IVpVj+c=",
+        "last_login": "2026-06-23T02:34:30.066Z",
+        "is_superuser": true,
+        "username": "somphone",
+        "first_name": "",
+        "last_name": "",
+        "email": "somphone@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-02-14T04:17:25.202Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$UreanzHN8oLBTa7ikCiCwm$/snQl4VsPDWn9NnrIVbcQxMvUAEpbnFEPx4aTuGycfY=",
+        "last_login": "2026-03-03T05:29:44.503Z",
+        "is_superuser": false,
+        "username": "Anusit@gmail.com",
+        "first_name": "Anusit",
+        "last_name": "bbfuture",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-02-14T04:24:11.665Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$clKEzvHNRhzhbXF9W18euC$Pb5zWFjZXeHuayh8bWu1tkvkydrb8wLoY1CPJyDSLGQ=",
+        "last_login": "2026-03-03T02:27:55.943Z",
+        "is_superuser": false,
+        "username": "noy",
+        "first_name": "ອານຸສິດ",
+        "last_name": "ເທບປັນຍາ",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-03-03T02:05:54.909Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$mKvvxdOjywHgAf61IbklEe$o5YmNoxspJLJHeOfP4tAxGor2DkuFUmZtNzoB/B0ygU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Dee",
+        "first_name": "Deevo",
+        "last_name": "sonephank",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-03-03T04:32:28.304Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$Qq5HqdFu9RJ4Nn6D01ZkxM$6LGA5bXtbJCiVbQpKEbERTdUihsB7/2vLrxirP66RTk=",
+        "last_login": "2026-05-07T02:28:08.554Z",
+        "is_superuser": false,
+        "username": "Ana",
+        "first_name": "ແອນນາ",
+        "last_name": "ດ້າເດ້ເດ້",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-05-07T02:27:57.299Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$rL6sdsENazml0aoCN9tb3z$B2j1B0MpqaIoSPM0eu2XFiCbsWVJdBDyDfY5Xlh/3/8=",
+        "last_login": "2026-05-21T07:36:12.354Z",
+        "is_superuser": false,
+        "username": "Daraphone",
+        "first_name": "Daraphone",
+        "last_name": "Oudomhak",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-05-21T07:35:42.093Z",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "ecom",
+        "model": "customer"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "ecom",
+        "model": "product"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "ecom",
+        "model": "orders"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "ecom",
+        "model": "feedback"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+        "app_label": "webpush",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "webpush",
+        "model": "pushinformation"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+        "app_label": "webpush",
+        "model": "subscriptioninfo"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "0p7ykr78fm1b1pa6uwef1hb6ixfohnff",
+    "fields": {
+        "session_data": ".eJxVjMEOwiAQBf-FsyFAoRSP3vsNhN0FqRpISnsy_rs06UGvb2bem_mwb9nvLa5-IXZlml1-Nwj4jOUA9AjlXjnWsq0L8EPhJ218rhRft9P9O8ih5V4jBDHZAQZQKllKIzkJKA0KEIYGSgEnnWw0xhIaFcfkeqFRYo-ck-zzBQqtOLw:1vsunn:anFghE0D6-JUV2iLNuxwcLm2eCGTBUKsnzvw101KhzI",
+        "expire_date": "2026-03-05T03:34:07.388Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "0qks89s76oc151c8mpqxnmut9bs0y5zx",
+    "fields": {
+        "session_data": ".eJxVjDsOgzAQBe-ydWRhsDGmTJ8zoP3YgSQyEjYV4u4BiYb2zczbgHEp0G_7AwZcyzisOSzDJNCDgdtGyN-QTiAfTO9Z8ZzKMpE6FXXRrF6zhN_zcm8HI-bxqJmw6lxDDdV1dBJb8ZpYW66ostJIRO5MdMFaJ2zr0EZ_FIY1H5H3GvY_UfE8CA:1vxI6G:LqplaaO8hKBFbD9LkrAF98yN8VuYAifNA32PJ-xGdy0",
+        "expire_date": "2026-03-17T05:15:16.093Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "1it4u7kbdo0rmke04pboxxek6cdh7kpw",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7fX0:1vxG9H:_dUC-fXntC88SGGVCsSXMnhlCKlM4k0G3N7Lw2eSSHo",
+        "expire_date": "2026-03-17T03:10:15.930Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "2j0kq0ateakp50mp4yyp7nkeylwkpymr",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjMsIjIiOjMsIjMiOjMsIjQiOjIsIjUiOjJ9fQ:1vwxUF:3IPljeRwZCftHfDom7LpaGJ4cMiI3mlLssAZE--sM40",
+        "expire_date": "2026-03-16T07:14:39.495Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "2te13vvgp0x4f9puvqlbhc87od209tpx",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjIiOjF9fQ:1vwzJf:uGe-hrN74BouZIh0F37UCP9ELF5FvV5bI3MdDeXKWyE",
+        "expire_date": "2026-03-16T09:11:51.770Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "51uwc2on5ruwgk2x0o81ztb29kkpl72a",
+    "fields": {
+        "session_data": ".eJxVjDkOgzAUBe_ya2RhgzF2mZ4zoL_YgSQCiaVC3D1GokjaNzPvgB73bej3NS79KBCghuJ3I-R3nC4gL5yes-J52paR1KWom66qmyV-Hrf7dzDgOuSaCcvWVVSRMclJasRrYm25pNJKJQm5rZOL1jpha2KTfC5q1pwj73U-ZVw2CAcYCKYADUGf5xfprj32:1vxI0C:tpqWAnSpkUEEeIH6DYh7D2qvRQYg5yqpZ8WuNQRTsc8",
+        "expire_date": "2026-03-17T05:09:00.906Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "5bsxeya1qvzbp5s6owjdvnc5ptv6tamr",
+    "fields": {
+        "session_data": ".eJxVjDsOgzAQRO-yNbLwD2OX6XMGtN61A0kEEp8KcfeYiIZuNG_e7EA4rxB2sBBkBRKCrsD8syr5qKDDbe27bUlzNzCEAm9dRPqk8QT8xvE1CZrGdR6iOCfioot4Tpy-j2t7O-hx6YtNEevW6aijUtlxbtjLSNJSHWvLmjNSa7JL1jomq1KTfTEMSSqS9xKOH4TRQBg:1vwxm4:UZm42SuaeaDjLnWZm8aVkcflb1itNAFQfzeoKhyZjQE",
+        "expire_date": "2026-03-16T07:33:04.578Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "7yynqotwrszt6u9bpr4uz709qpfjvsg8",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGll2_MOU9DmD5V3v4gBypDipEHeHSCmgfTPzXiLlba1p67SkqYiLMOL0u0HGB7UdlHtut1ni3NZlArkr8qBdjnOh5_Vw_w5q7vVba1ba6-CMY0WGjVLEnDUYj1wonmOMVkd2TDBYdB4jEAMGCKAG6414fwDk_jg-:1vr7Eq:JQnEU5b9te-jfYH5WqtgWyrpTxV-qR27O1uNFRTq1rE",
+        "expire_date": "2026-02-28T04:26:36.511Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "a1bdqglubs2w75csfwsrujh7n0d4okgf",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjEsIjYiOjIsIjIiOjR9fQ:1vwxGE:xSGBpF7F9T4DNSKymDzOuYssjR17mrE3GU26Oa-Y0xE",
+        "expire_date": "2026-03-16T07:00:10.462Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "b9y5gx77ri00pfnu05qe4rls9k95mbyy",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGll2_MOU9DmD5V3v4gBypDipEHeHSCmgfTPzXiLlba1p67SkqYiLMOL0u0HGB7UdlHtut1ni3NZlArkr8qBdjnOh5_Vw_w5q7vVba1ba6-CMY0WGjVLEnDUYj1wonmOMVkd2TDBYdB4jEAMGCKAG6414fwDk_jg-:1wPuQ8:LmcMHjGTz5QAE0csQ80RlNlKSbGz4rNEBy0g2qH5osw",
+        "expire_date": "2026-06-04T03:50:04.158Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ccsc23vri8xhujh8k0pf9f1kk40hycrh",
+    "fields": {
+        "session_data": ".eJxVjMEOwiAQBf-FsyFAoRSP3vsNhN0FqRpISnsy_rs06UGvb2bem_mwb9nvLa5-IXZlml1-Nwj4jOUA9AjlXjnWsq0L8EPhJ218rhRft9P9O8ih5V4jBDHZAQZQKllKIzkJKA0KEIYGSgEnnWw0xhIaFcfkeqFRYo-ck-zzBQqtOLw:1vxIKF:fdvpdD5p1n4X7XxdOihx-IL4FEAoAmAXUA8zcJ4yuj8",
+        "expire_date": "2026-03-17T05:29:43.288Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "cy7kjf4k2ybrv5ohs87pr4lg42atoum9",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjIxLCIyIjoxMywiMyI6MSwiNSI6MX0sImNhcnRfY291bnQiOjIzfQ:1vws5H:r29iEyYB_-pAdpOUgc2wijr5_k3axdYinDiYGOJeRNs",
+        "expire_date": "2026-03-16T01:28:31.838Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "dsg8bd96ls0x5l02qm9ncqe3wzrin72c",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7fX0:1wbrPc:EaDXvW4TmE_8StVRfWQm2IShGYGjgSzNbIg79iAJmXs",
+        "expire_date": "2026-07-07T03:02:56.662Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "g2dfw4rcezh4ysdwudm7bs4hk8l35ack",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGll2_MOU9DmD5V3v4gBypDipEHeHSCmgfTPzXiLlba1p67SkqYiLMOL0u0HGB7UdlHtut1ni3NZlArkr8qBdjnOh5_Vw_w5q7vVba1ba6-CMY0WGjVLEnDUYj1wonmOMVkd2TDBYdB4jEAMGCKAG6414fwDk_jg-:1wKoVL:ahfxPHClfL9BJYTevL2ymhR9gSZ6-1RmV89mw-5dQ4E",
+        "expire_date": "2026-05-21T02:30:23.360Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "gbg2cekz7i4vx4r3diam23tg8zzqtooh",
+    "fields": {
+        "session_data": ".eJxVjDkOgzAUBe_y68jCxsbYZfqcAf3FjkkikFgqxN0DEg3tm5m3AeO0QNzAQTT7Azpcl9Ktc5q6XiCChdtGyN80nEA-OLxHxeOwTD2pU1EXndVrlPR7Xu7toOBcjpoJq9bXVJMx2UtuJGhi7biiykktGbm12SfnvLAzqcnhKCxrPqIQNOx__fI87Q:1vxICa:gsaeybGsBmHufVGxvi4l4Z1pOuWx4tDrUsneHyIEgmY",
+        "expire_date": "2026-03-17T05:21:48.203Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "j1e37b49vdmhgt8695csukc81de8yum8",
+    "fields": {
+        "session_data": ".eJzFlE9PgzAYh78K6XkbMAaT3dSoJ6MXT25Z-uftVoV2aeHisu8uHWi2KoMsLt7I-z790d8TwhYtcVmsl6UBvRQMzVCEBoczguk7SLtgb1iu1IgqWWhBRhYZNVszelQMspuGPQpYY7OuToc8CJNwGkcxDyDiURAA5zgkUUI5g_QqTdNJmPKYAxlPaJzQlAAndEqmJBhPkv2tcpClqbJet3MkcQ5zNPPm6Lp6FchCUFwIJT0smWdHSouP_WSOBhUlqH2yPMfG43ho1gIyNsRZUQO5bWAschz_oFW5MS0htqEZUrWq96XO6rWPWS6kby34Kxvg1wBm7KWdqbYNRzRgRnWZk19u9AeFdwPvrJK7hSVAMAuEQTB2g14s-zNHf-Wc8GTXHZr2yP9Z6i7n-oncQehm3lGVt0RSoWkGp7_O29IUKm-_1mGGax2qV_u0CWg3f4z1tN-jlmuibxVXaewG3QMw-2M62wlvAjqcfGOXc9K3iuskcYOeNKvMnm1E7Y93-Gigy9noV8J1MXVjnrViJS3OlrGpz3fY-KIup6NnD9fHlTuY7BZo9wn5aZAx:1vvtNy:oscMq7dWPX12UPK9d4AsK3Cuzmx1wDa6V4aj-hVwSUQ",
+        "expire_date": "2026-03-13T08:39:46.305Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "kv6a8dgjw5gzv14ja2vm5vcybniqst2d",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGll2_MOU9DmD5V3v4gBypDipEHeHSCmgfTPzXiLlba1p67SkqYiLMOL0u0HGB7UdlHtut1ni3NZlArkr8qBdjnOh5_Vw_w5q7vVba1ba6-CMY0WGjVLEnDUYj1wonmOMVkd2TDBYdB4jEAMGCKAG6414fwDk_jg-:1wPs0m:7Kap_79NeaZjC-PubZSthBvocLm5d1npu1GJ-6XmRzg",
+        "expire_date": "2026-06-04T01:15:44.176Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "l6bf49wncwwjcrkd631wwqhrncq1btu1",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjMsIjIiOjMsIjYiOjN9fQ:1vwwIR:MmeqdenfaqedyRp3XuOu1wylwhdqB-y-sUtDh5EZYPU",
+        "expire_date": "2026-03-16T05:58:23.415Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "o01x5se29y8w8gofo3kyerpugbwwhu3h",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGll2_MOU9DmD5V3v4gBypDipEHeHSCmgfTPzXiLlba1p67SkqYiLMOL0u0HGB7UdlHtut1ni3NZlArkr8qBdjnOh5_Vw_w5q7vVba1ba6-CMY0WGjVLEnDUYj1wonmOMVkd2TDBYdB4jEAMGCKAG6414fwDk_jg-:1wHFQm:D6ZMVFvjUN_EMHjLX8z1eBpFeqAWISq8cgt63eqEwR4",
+        "expire_date": "2026-05-11T06:26:56.972Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "sv7z6qsbk7oqbpt6hpl7p5egztyw0ir3",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjF9fQ:1vxE2b:1O8jvVsQ7dd5RMfSK4_1B1FWAZcMWf0AwyHuA7ABmdE",
+        "expire_date": "2026-03-17T00:55:13.793Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ufcpgcuykgagv6o8v3mj2hbn1rlr6qog",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjE1LCI2IjoxfX0:1vwwjq:yx-OHBwgWI9aWHSOm4ca7rrqr2OCJTXyIGMD7kdxdDQ",
+        "expire_date": "2026-03-16T06:26:42.549Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "xov4jdiiwsakd1n8xl9wsiwzovxu977m",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjMsIjIiOjIsIjYiOjIsIjMiOjJ9fQ:1vwx5y:BASpslBMlzVI-oz0shHUv7qHzBVPdR5cu4bfDYgg7xY",
+        "expire_date": "2026-03-16T06:49:34.102Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "y5ynruoe5tpvrxe67rsxz7ocfentxpr6",
+    "fields": {
+        "session_data": "eyJjYXJ0Ijp7IjEiOjIsIjMiOjJ9fQ:1vwvjp:l6gB0y2HSt_tMPiOr5jbqEm-auzP0z0wQAKvbefsYNo",
+        "expire_date": "2026-03-16T05:22:37.804Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ytbz2qviq90xbfpkj87ks7jffz9baj6w",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGll2_MOU9DmD5V3v4gBypDipEHeHSCmgfTPzXiLlba1p67SkqYiLMOL0u0HGB7UdlHtut1ni3NZlArkr8qBdjnOh5_Vw_w5q7vVba1ba6-CMY0WGjVLEnDUYj1wonmOMVkd2TDBYdB4jEAMGCKAG6414fwDk_jg-:1wMIhK:iFczobUfG6ATXRlf0f4u4c5HuMn7dvYdTHvxiDJxjbI",
+        "expire_date": "2026-05-25T04:56:54.517Z"
+    }
+},
+{
+    "model": "ecom.customer",
+    "pk": 2,
+    "fields": {
+        "user": 4,
+        "profile_pic": "profile_pic/CustomerProfilePic/ສມພອນ.jpg",
+        "address": "Km 22, NoonThong Village, Xaythany Distr",
+        "mobile": "2092543795"
+    }
+},
+{
+    "model": "ecom.customer",
+    "pk": 3,
+    "fields": {
+        "user": 5,
+        "profile_pic": "profile_pic/CustomerProfilePic/somphone.jpg",
+        "address": "ໂນນທອງ",
+        "mobile": "02088749966"
+    }
+},
+{
+    "model": "ecom.customer",
+    "pk": 4,
+    "fields": {
+        "user": 6,
+        "profile_pic": "profile_pic/CustomerProfilePic/IMG_8428.jpg",
+        "address": "Huaxieng",
+        "mobile": "02087996686"
+    }
+},
+{
+    "model": "ecom.customer",
+    "pk": 5,
+    "fields": {
+        "user": 7,
+        "profile_pic": "profile_pic/CustomerProfilePic/ຮ-1.png",
+        "address": "Ana",
+        "mobile": "02085797988"
+    }
+},
+{
+    "model": "ecom.customer",
+    "pk": 6,
+    "fields": {
+        "user": 8,
+        "profile_pic": "profile_pic/CustomerProfilePic/Untitled-2.png",
+        "address": "ໂນນທອງ",
+        "mobile": "02078977779"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 1,
+    "fields": {
+        "name": "Sah",
+        "product_image": "product_image/f1_Tx2J1eC.jpg",
+        "price": 15000,
+        "description": "Operates like computer, console and more"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 2,
+    "fields": {
+        "name": "Sakheing",
+        "product_image": "product_image/f5_CFI2Go0.jpg",
+        "price": 15000,
+        "description": "Operates like computer, console and more"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 3,
+    "fields": {
+        "name": "KPAES",
+        "product_image": "product_image/f3_hBmqEe9.jpg",
+        "price": 15000,
+        "description": "Operates like computer, console and more"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 4,
+    "fields": {
+        "name": "Sathai",
+        "product_image": "product_image/f2_MTxftYe.jpg",
+        "price": 15000,
+        "description": "Operates like computer, console and more"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 5,
+    "fields": {
+        "name": "KOKO",
+        "product_image": "product_image/f3_t0gSe4G.jpg",
+        "price": 15000,
+        "description": "Operates like computer, console and more"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 6,
+    "fields": {
+        "name": "sds",
+        "product_image": "product_image/f2_hfhTuA0.jpg",
+        "price": 25000,
+        "description": "bag 23cm x 34cm"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 7,
+    "fields": {
+        "name": "sdstt",
+        "product_image": "product_image/f2_gPqQrPQ.jpg",
+        "price": 25000,
+        "description": "bag 23cm x 34cm"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 8,
+    "fields": {
+        "name": "AA",
+        "product_image": "product_image/f4.jpg",
+        "price": 25000,
+        "description": "AA"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 9,
+    "fields": {
+        "name": "BB",
+        "product_image": "product_image/f3_kvnI0sU.jpg",
+        "price": 70000,
+        "description": "BB"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 10,
+    "fields": {
+        "name": "CC",
+        "product_image": "product_image/f4_mvereRK.jpg",
+        "price": 20000,
+        "description": "CC"
+    }
+},
+{
+    "model": "ecom.product",
+    "pk": 11,
+    "fields": {
+        "name": "DD",
+        "product_image": "product_image/f3_XsJeJyV.jpg",
+        "price": 25000,
+        "description": "DD"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 2,
+    "fields": {
+        "customer": 2,
+        "product": 1,
+        "quantity": 1,
+        "amount": null,
+        "email": "Anusit@gmail.com",
+        "address": "nonthong",
+        "mobile": "2088749966",
+        "order_date": "2026-02-14",
+        "status": "Delivered"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 3,
+    "fields": {
+        "customer": 2,
+        "product": 3,
+        "quantity": 1,
+        "amount": null,
+        "email": "Anusit@gmail.com",
+        "address": "nonthong",
+        "mobile": "2088749966",
+        "order_date": "2026-02-14",
+        "status": "Delivered"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 4,
+    "fields": {
+        "customer": 2,
+        "product": 4,
+        "quantity": 1,
+        "amount": null,
+        "email": "Anusit@gmail.com",
+        "address": "nonthong",
+        "mobile": "2088749966",
+        "order_date": "2026-02-14",
+        "status": "Delivered"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 5,
+    "fields": {
+        "customer": 2,
+        "product": 5,
+        "quantity": 1,
+        "amount": null,
+        "email": "Anusit@gmail.com",
+        "address": "nonthong",
+        "mobile": "2088749966",
+        "order_date": "2026-02-14",
+        "status": "Delivered"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 6,
+    "fields": {
+        "customer": 2,
+        "product": 1,
+        "quantity": 1,
+        "amount": null,
+        "email": "Anusit@gmail.com",
+        "address": "nonthong",
+        "mobile": "2088749966",
+        "order_date": "2026-02-14",
+        "status": "Delivered"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 7,
+    "fields": {
+        "customer": 2,
+        "product": 2,
+        "quantity": 1,
+        "amount": null,
+        "email": "Anusit@gmail.com",
+        "address": "nonthong",
+        "mobile": "2088749966",
+        "order_date": "2026-02-14",
+        "status": "Delivered"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 8,
+    "fields": {
+        "customer": 3,
+        "product": 2,
+        "quantity": 1,
+        "amount": null,
+        "email": "somphonebth12@gmail.com",
+        "address": "nonthong",
+        "mobile": "2055710065",
+        "order_date": "2026-03-03",
+        "status": "Pending"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 9,
+    "fields": {
+        "customer": 3,
+        "product": 3,
+        "quantity": 1,
+        "amount": null,
+        "email": "somphonebth12@gmail.com",
+        "address": "nonthong",
+        "mobile": "2055710065",
+        "order_date": "2026-03-03",
+        "status": "Pending"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 10,
+    "fields": {
+        "customer": 5,
+        "product": 1,
+        "quantity": 2,
+        "amount": "30000.00",
+        "email": "Ana@gmail.com",
+        "address": "FEFE",
+        "mobile": "57465564",
+        "order_date": "2026-05-07",
+        "status": "Pending"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 11,
+    "fields": {
+        "customer": 5,
+        "product": 2,
+        "quantity": 2,
+        "amount": "30000.00",
+        "email": "Ana@gmail.com",
+        "address": "FEFE",
+        "mobile": "57465564",
+        "order_date": "2026-05-07",
+        "status": "Pending"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 12,
+    "fields": {
+        "customer": 6,
+        "product": 1,
+        "quantity": 1,
+        "amount": "15000.00",
+        "email": "Daraphone@gmail.com",
+        "address": "ghgfh",
+        "mobile": "2078799888",
+        "order_date": "2026-05-21",
+        "status": "Pending"
+    }
+},
+{
+    "model": "ecom.orders",
+    "pk": 13,
+    "fields": {
+        "customer": 6,
+        "product": 2,
+        "quantity": 1,
+        "amount": "15000.00",
+        "email": "Daraphone@gmail.com",
+        "address": "ghgfh",
+        "mobile": "2078799888",
+        "order_date": "2026-05-21",
+        "status": "Pending"
+    }
+}
+]
