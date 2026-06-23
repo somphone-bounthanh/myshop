@@ -107,7 +107,7 @@
                         {% endfor %}
                         {% for p in product %}
                         <td>{{p.name}}</td>
-                        <td> <img src="/static/{{ c.profile_pic.name }}" alt="Profile" class="img-customer" loading="lazy"></td>
+                        <td> <img src="/static/{{ p.product_image.name }}" alt="{{ p.name }}" style="width:50px; height:50px;"></td>
                         <td align="center">
                             <span class="status-tag {% if order.status == 'Delivered' %}delivered{% else %}pending{% endif %}">
                                 {{order.status}}
