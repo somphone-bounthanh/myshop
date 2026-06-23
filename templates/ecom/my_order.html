@@ -275,7 +275,7 @@ body {
                 <li class="col-md-4">
                   <figure class="itemside mb-3">
                     {%for product in products%}
-                      <div class="aside"><img src="/static/product_image/{{ p.product_image.name|cut:'product_image/' }}" alt="{{ p.name }}"></div>
+                      <div class="aside"><img src="/static/product_image/{{ p.product_image.name|cut:'product_image/' }}" class="img-sm border"></div>
                       <figcaption class="info align-self-center">
 
                           <p class="title"><strong>Name : </strong>{{product.name}} <br> <strong>Description : </strong>{{product.description}}</p> <span class="text-muted"><strong>Price : </strong>{{product.price}} </span>
