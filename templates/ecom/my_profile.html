@@ -53,7 +53,10 @@
 <div style="padding-left:300px;" class="container">
 
         <div class="col-sm-2 col-md-2">
-            <img src="{% static customer.profile_pic.url %}"   alt="profile pic" class="img-rounded img-responsive" />
+            <!-- <img src="{% static customer.profile_pic.url %}"   alt="profile pic" class="img-rounded img-responsive" /> -->
+             <!-- ແກ້ໄຂແຖວ 65 ສະແດງຮູບລູກຄ້າ ໃຫ້ດຶງຜ່ານ static ໂດຍກົງ (ລຶບ |cut ອອກ) -->
+            <img src="/static/{{ c.profile_pic.name }}" alt="Profile" class="img-customer" loading="lazy">
+
         </div>
         <div class="col-sm-4 col-md-4">
             <blockquote>

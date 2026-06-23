@@ -157,7 +157,9 @@
                     <tr>
                         <!-- ຮູບພາບ -->
                         <td>
-                            <img src="{% static p.product_image.url %}" alt="{{p.name}}" class="img-product" loading="lazy">
+                            
+                            <img src="/static/{{ p.product_image.name }}" alt="{{ p.name }}" style="width:50px; height:50px;">
+
                         </td>
 
                         <!-- ຊື່ ແລະ ID -->
