@@ -61,3 +61,4 @@ urlpatterns = [
     path('payment-success', views.payment_success_view,name='payment-success'),
 
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
