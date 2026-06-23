@@ -180,9 +180,18 @@
                     {% render_field customerForm.mobile class="form-control-style" placeholder="ເບີໂທລະສັບ" %}
                 </div>
 
-                <div class="form-input-custom" style="text-align: left;">
-                    <label style="font-size: 12px; color: #adb5bd; margin-left: 15px;">ຮູບໂປຣໄຟລ໌ (ຖ້າມີ)</label>
-                    {% render_field customerForm.profile_pic class="form-control-style" style="padding-top: 10px;" %}
+               
+                <div class="text-center mt-2">
+                   <!--ແຖບສະແດງກ້ອງສົດ -->
+                  <video id="video" width="100%" height="auto" autoplay style="border: 2px solid #ccc; border-radius: 10px; display: none;"></video>
+                  <!-- ປຸ່ມກົດເປີດກ້ອງ ແລະ ກົດຖ່າຍ -->
+                   <button type="button" id="start-camera" class="btn btn-secondary btn-sm mt-1">📷 ເປີດກ້ອງຖ່າຍຮູບ</button>
+                   <button type="button" id="click-photo" class="btn btn-warning btn-sm mt-1" style="display: none;">📸 ກົດຖ່າຍຮູບ</button>
+                   <!-- ບ່ອນເກັບຮູບພາບທີ່ຖ່າຍແລ້ວ -->
+                   <canvas id="canvas" width="320" height="240" style="display: none; margin: 0 auto; border-radius: 10px;"></canvas>
+
+                    <!-- <label style="font-size: 12px; color: #adb5bd; margin-left: 15px;">ຮູບໂປຣໄຟລ໌ (ຖ້າມີ)</label> -->
+                    <!-- {% render_field customerForm.profile_pic class="form-control-style" style="padding-top: 10px;" %} -->
                 </div>
 
                 <button type="submit" class="btn-signup">ລົງທະບຽນ</button>
@@ -197,4 +206,48 @@
     {% include "ecom/footer.html" %}
 
 </body>
+<script>
+let camera_button = document.querySelector("#start-camera");
+let video = document.querySelector("#video");
+let click_button = document.querySelector("#click-photo");
+let canvas = document.querySelector("#canvas");
+let fileInput = document.querySelector('input[name="profile_pic"]');
+
+camera_button.addEventListener('click', async function() {
+    // ກວດສອບວ່າເປັນ HTTPS ຫຼື ບໍ່
+    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        alert("ກະລຸນາເຂົ້າເວັບໄຊຜ່ານ https:// ເພື່ອອະນຸຍາດໃຫ້ເປີດກ້ອງຖ່າຍຮູບໄດ້ຢ່າງປອດໄພ!");
+        return;
+    }
+
+    try {
+        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+        video.srcObject = stream;
+        video.style.display = "block";
+        click_button.style.display = "inline-block";
+        camera_button.style.display = "none";
+    } catch (error) {
+        alert("ບໍ່ສາມາດເປີດກ້ອງໄດ້: " + error.message + " (ກະລຸນາກວດເຊັກການອະນຸຍາດກ້ອງໃນ Browser)");
+    }
+});
+
+click_button.addEventListener('click', function() {
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.style.display = "block";
+    video.style.display = "none";
+    click_button.style.display = "none";
+    
+    canvas.toBlob(function(blob) {
+        let file = new File([blob], "profile_live.jpg", {type:"image/jpeg", lastModified:new Date().getTime()});
+        let container = new DataTransfer();
+        container.items.add(file);
+        fileInput.files = container.files;
+    }, 'image/jpeg');
+    
+    let stream = video.srcObject;
+    let tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+});
+</script>
+
 </html>
